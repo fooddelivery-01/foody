@@ -1,0 +1,261 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foody Food Delivery</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f4f4;
+    margin:0;
+}
+
+header{
+    background:#ff6600;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.container{
+    width:90%;
+    max-width:800px;
+    margin:auto;
+    padding:20px;
+}
+
+.food{
+    background:white;
+    padding:15px;
+    margin:10px 0;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    box-sizing:border-box;
+}
+
+button{
+    padding:10px 15px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:5px;
+}
+
+.add-btn{
+    background:#28a745;
+    color:white;
+}
+
+.order-btn{
+    background:#25D366;
+    color:white;
+}
+
+.location-btn{
+    background:#007bff;
+    color:white;
+}
+
+#cart{
+    background:white;
+    padding:15px;
+    border-radius:10px;
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🍔 Foody Food Delivery</h1>
+<p>Order Delicious Food Online</p>
+</header>
+
+<div class="container">
+
+<h2>Customer Details</h2>
+
+<input type="text" id="name" placeholder="Enter Your Name">
+
+<input type="text" id="address" placeholder="Enter Address">
+
+<input type="number" id="distance" placeholder="Distance (KM)">
+
+<input type="text" id="location" placeholder="Current Location" readonly>
+
+<button class="location-btn" onclick="getLocation()">
+📍 Get Current Location
+</button>
+
+<h2>Menu</h2>
+
+<div class="food">
+<h3>Burger</h3>
+<p>₹99</p>
+<button class="add-btn"
+onclick="addToCart('Burger',99)">
+Add To Cart
+</button>
+</div>
+
+<div class="food">
+<h3>Pizza</h3>
+<p>₹199</p>
+<button class="add-btn"
+onclick="addToCart('Pizza',199)">
+Add To Cart
+</button>
+</div>
+
+<div class="food">
+<h3>Sandwich</h3>
+<p>₹79</p>
+<button class="add-btn"
+onclick="addToCart('Sandwich',79)">
+Add To Cart
+</button>
+</div>
+
+<div class="food">
+<h3>French Fries</h3>
+<p>₹69</p>
+<button class="add-btn"
+onclick="addToCart('French Fries',69)">
+Add To Cart
+</button>
+</div>
+
+<div id="cart">
+
+<h2>🛒 Cart</h2>
+
+<ul id="cartItems"></ul>
+
+<h3>Food Total: ₹<span id="total">0</span></h3>
+
+<button class="order-btn"
+onclick="orderWhatsApp()">
+Order on WhatsApp
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let items = [];
+let total = 0;
+
+function addToCart(name,price){
+
+    items.push(name + " - ₹" + price);
+
+    total += price;
+
+    document.getElementById("total").innerText = total;
+
+    let li = document.createElement("li");
+    li.innerText = name + " - ₹" + price;
+
+    document.getElementById("cartItems").appendChild(li);
+
+    alert(name + " added to cart");
+}
+
+function getLocation(){
+
+    if(navigator.geolocation){
+
+        navigator.geolocation.getCurrentPosition(
+        function(position){
+
+            let lat = position.coords.latitude;
+            let lng = position.coords.longitude;
+
+            let mapLink =
+            "https://www.google.com/maps?q="
+            + lat + "," + lng;
+
+            document.getElementById("location").value =
+            mapLink;
+
+        },
+        function(){
+            alert("Location access denied");
+        });
+
+    }else{
+        alert("Geolocation not supported");
+    }
+}
+
+function orderWhatsApp(){
+
+    let customerName =
+    document.getElementById("name").value;
+
+    let address =
+    document.getElementById("address").value;
+
+    let distance =
+    Number(document.getElementById("distance").value);
+
+    let location =
+    document.getElementById("location").value;
+
+    if(customerName==="" || address===""){
+        alert("Please fill all details");
+        return;
+    }
+
+    if(items.length===0){
+        alert("Cart is empty");
+        return;
+    }
+
+    let deliveryCharge = distance * 2;
+
+    let grandTotal =
+    total + deliveryCharge;
+
+    let message =
+    "🍔 FOODY ORDER\n\n" +
+    "Name: " + customerName + "\n" +
+    "Address: " + address + "\n" +
+    "Distance: " + distance + " KM\n" +
+    "Location: " + location + "\n\n" +
+    "Items:\n" +
+    items.join("\n") +
+    "\n\nFood Total: ₹" + total +
+    "\nDelivery Charge: ₹" +
+    deliveryCharge +
+    "\nGrand Total: ₹" +
+    grandTotal;
+
+    let phone = "8449196052";
+
+    let url =
+    "https://wa.me/" +
+    phone +
+    "?text=" +
+    encodeURIComponent(message);
+
+    window.open(url,"_blank");
+}
+
+</script>
+
+</body>
+</html>
+```
