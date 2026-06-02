@@ -1,227 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Foody Delivery App</title>
+<title>FOODY - Online Food Delivery</title>
 
 <style>
 body{
     font-family:Arial;
     margin:0;
-    background:#f4f4f4;
+    background:#fff8e6;
 }
 
 header{
-    background:#ff5722;
+    background:red;
     color:white;
     text-align:center;
-    padding:20px;
+    padding:15px;
+    font-size:26px;
+    font-weight:bold;
 }
 
 .container{
-    width:90%;
-    max-width:900px;
-    margin:auto;
-    padding:20px;
-}
-
-.food{
-    background:white;
     padding:15px;
-    margin:10px 0;
-    border-radius:10px;
     text-align:center;
 }
 
-.food img{
-    width:100%;
-    height:180px;
-    object-fit:cover;
+.card{
+    display:inline-block;
+    width:180px;
+    margin:10px;
+    background:white;
+    padding:10px;
     border-radius:10px;
+    box-shadow:0 0 10px #ccc;
+}
+
+.price{
+    color:green;
+    font-weight:bold;
 }
 
 button{
-    padding:10px;
-    margin-top:8px;
+    background:green;
+    color:white;
     border:none;
-    border-radius:5px;
+    padding:6px;
+    margin-top:5px;
     cursor:pointer;
+    border-radius:5px;
 }
 
-.add{background:green;color:white;}
-.clear{background:red;color:white;}
-.order{background:#25D366;color:white;}
-.loc{background:#007bff;color:white;}
-
-#cart{
+.cart{
     background:white;
     padding:15px;
-    margin-top:20px;
+    margin:10px;
     border-radius:10px;
+    box-shadow:0 0 10px #ccc;
+}
+
+input{
+    padding:5px;
+    width:100px;
+}
+
+hr{
+    margin:15px 0;
 }
 </style>
+
 </head>
 
 <body>
 
-<header>
-<h1>🍔 Foody Delivery App</h1>
-<p>Fast & Smart Food Delivery</p>
-</header>
+<header>🍔 FOODY - ONLINE FOOD DELIVERY</header>
 
 <div class="container">
 
-<h2>Customer Details</h2>
+<h2>🔥 Menu</h2>
 
-<input id="name" placeholder="Name"><br><br>
-<input id="mobile" placeholder="Mobile"><br><br>
-<input id="address" placeholder="Address"><br><br>
-
-<input id="distance" type="number" placeholder="Distance KM (Required)" min="1" oninput="updateCart()"><br><br>
-
-<input id="location" placeholder="GPS Location" readonly><br><br>
-
-<button class="loc" onclick="getLocation()">📍 Get Location</button>
-
-<h2>🍔 Menu</h2>
-
-<div class="food">
-<img src="https://images.unsplash.com/photo-1601924582971-3f9f3f9c8c1b">
-<h3>Pizza</h3>
-<p>₹199</p>
-<button class="add" onclick="add('Pizza',199)">Add</button>
+<div class="card">
+🍔 Burger<br>
+<span class="price">₹30</span><br>
+<button onclick="add('Burger',30)">Add</button>
 </div>
 
-<div class="food">
-<img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086">
-<h3>Burger</h3>
-<p>₹99</p>
-<button class="add" onclick="add('Burger',99)">Add</button>
+<div class="card">
+🍕 Pizza<br>
+<span class="price">₹40</span><br>
+<button onclick="add('Pizza',40)">Add</button>
 </div>
 
-<div class="food">
-<img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
-<h3>Sandwich</h3>
-<p>₹79</p>
-<button class="add" onclick="add('Sandwich',79)">Add</button>
+<div class="card">
+🍜 Noodles<br>
+<span class="price">₹35</span><br>
+<button onclick="add('Noodles',35)">Add</button>
 </div>
 
-<div class="food">
-<img src="https://images.unsplash.com/photo-1604908176997-125f25cc500f">
-<h3>French Fries</h3>
-<p>₹69</p>
-<button class="add" onclick="add('Fries',69)">Add</button>
+<div class="card">
+🥪 Sandwich<br>
+<span class="price">₹25</span><br>
+<button onclick="add('Sandwich',25)">Add</button>
 </div>
 
-<div class="food">
-<img src="https://images.unsplash.com/photo-1604152135912-04a022e23696">
-<h3>Pasta</h3>
-<p>₹150</p>
-<button class="add" onclick="add('Pasta',150)">Add</button>
+<div class="card">
+🍟 Fries<br>
+<span class="price">₹20</span><br>
+<button onclick="add('Fries',20)">Add</button>
 </div>
 
-<div id="cart">
-
-<h2>🛒 Cart</h2>
-
-<ul id="list"></ul>
-
-<p>Food Total: ₹<span id="total">0</span></p>
-<p>Delivery (₹3/km): ₹<span id="delivery">0</span></p>
-<p><b>Grand Total: ₹<span id="grand">0</span></b></p>
-
-<p><b>Minimum Order ₹120 Required</b></p>
-
-<button class="clear" onclick="clearCart()">Clear Cart</button>
-<button class="order" onclick="order()">Order on WhatsApp</button>
-
+<div class="card">
+🥤 Cold Drink<br>
+<span class="price">₹15</span><br>
+<button onclick="add('Cold Drink',15)">Add</button>
 </div>
 
 </div>
 
-<script>
+<div class="cart">
 
-let cart = [];
-let total = 0;
-
-function add(name,price){
-    cart.push({name,price});
-    total += price;
-
-    let li = document.createElement("li");
-    li.innerText = name + " ₹" + price;
-    document.getElementById("list").appendChild(li);
-
-    updateCart();
-}
-
-function clearCart(){
-    cart = [];
-    total = 0;
-    document.getElementById("list").innerHTML = "";
-    updateCart();
-}
-
-function updateCart(){
-
-    let dist = Number(document.getElementById("distance").value);
-
-    let delivery = dist > 0 ? dist * 3 : 0;
-
-    document.getElementById("total").innerText = total;
-    document.getElementById("delivery").innerText = delivery;
-    document.getElementById("grand").innerText = total + delivery;
-}
-
-function getLocation(){
-
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(pos=>{
-            document.getElementById("location").value =
-            "https://maps.google.com/?q=" + pos.coords.latitude + "," + pos.coords.longitude;
-        });
-    }
-}
-
-function order(){
-
-    let name = document.getElementById("name").value;
-    let mobile = document.getElementById("mobile").value;
-    let address = document.getElementById("address").value;
-    let distance = document.getElementById("distance").value;
-    let location = document.getElementById("location").value;
-
-    distance = Number(distance);
-
-    if(name=="" || mobile=="" || address==""){
-        alert("Fill all details");
-        return;
-    }
-
-    if(distance <= 0){
-        alert("Distance required (min 1 KM)");
-        return;
-    }
-
-    if(cart.length==0){
-        alert("Cart empty");
-        return;
-    }
-
-    if(total < 120){
-        alert("Minimum order ₹120 required");
-        return;
-    }
-
-    let delivery = distance * 3;
-    let grand = total + delivery;
-    <div class="cart">
 <h2>🛒 Cart</h2>
 
 <div id="cart"></div>
 
-<p>Distance (KM): <input type="number" id="km" value="1"></p>
+<p>Distance (KM): 
+<input type="number" id="km" value="1">
+</p>
 
 <h3 id="total">Total: ₹0</h3>
 
@@ -230,34 +132,68 @@ function order(){
 
 <hr>
 
-<h2>💳 Pay Online (UPI)</h2>
+<h2>💳 UPI Payment</h2>
 
 <p><b>UPI ID:</b> 8449196052@nyes</p>
 
 <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=8449196052@nyes&pn=FOODY&cu=INR"
-style="width:180px;height:180px;border:1px solid #ccc;border-radius:10px;">
+style="width:180px;height:180px;border-radius:10px;border:1px solid #ccc;">
 
 <p>📲 Scan QR to Pay</p>
 
 </div>
 
-    let msg =
-`🍔 FOODY ORDER
+<script>
 
-Name: ${name}
-Mobile: ${mobile}
-Address: ${address}
-Distance: ${distance} KM
-Location: ${location}
+let cart = [];
 
-Items:
-` + cart.map(i=>i.name+" ₹"+i.price).join("\n") + `
+function add(name, price){
+    cart.push({name, price});
+    show();
+}
 
-Total: ₹${total}
-Delivery: ₹${delivery}
-Grand: ₹${grand}`;
+function show(){
+    let html = "";
+    let total = 0;
 
-    window.open("https://wa.me/8449196052?text=" + encodeURIComponent(msg), "_blank");
+    cart.forEach(item=>{
+        html += item.name + " - ₹" + item.price + "<br>";
+        total += item.price;
+    });
+
+    document.getElementById("cart").innerHTML = html;
+    document.getElementById("total").innerText = "Total: ₹" + total;
+}
+
+function bill(){
+    let km = document.getElementById("km").value;
+
+    let food = cart.reduce((a,b)=>a+b.price,0);
+    let delivery = km * 3;
+    let total = food + delivery;
+
+    document.getElementById("total").innerHTML =
+    "Food: ₹" + food +
+    "<br>Delivery: ₹" + delivery +
+    "<br><b>Total: ₹" + total + "</b>";
+}
+
+function order(){
+
+    let km = document.getElementById("km").value;
+
+    let msg = "FOODY ORDER:%0A";
+
+    cart.forEach(i=>{
+        msg += i.name + " ₹" + i.price + "%0A";
+    });
+
+    let total = cart.reduce((a,b)=>a+b.price,0) + (km*3);
+
+    msg += "%0ADistance: " + km + " KM";
+    msg += "%0ATotal: ₹" + total;
+
+    window.open("https://wa.me/91XXXXXXXXXX?text=" + msg);
 }
 
 </script>
