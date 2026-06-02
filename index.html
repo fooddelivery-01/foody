@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Foody Pro - Food Delivery</title>
+<title>Foody Delivery App</title>
 
 <style>
 body{
@@ -31,19 +31,28 @@ header{
     padding:15px;
     margin:10px 0;
     border-radius:10px;
+    text-align:center;
+}
+
+.food img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:10px;
 }
 
 button{
     padding:10px;
+    margin-top:8px;
     border:none;
-    cursor:pointer;
     border-radius:5px;
+    cursor:pointer;
 }
 
 .add{background:green;color:white;}
-.remove{background:red;color:white;}
+.clear{background:red;color:white;}
 .order{background:#25D366;color:white;}
-.location{background:#007bff;color:white;}
+.loc{background:#007bff;color:white;}
 
 #cart{
     background:white;
@@ -57,7 +66,7 @@ button{
 <body>
 
 <header>
-<h1>🍔 Foody Pro</h1>
+<h1>🍔 Foody Delivery App</h1>
 <p>Fast & Smart Food Delivery</p>
 </header>
 
@@ -68,59 +77,48 @@ button{
 <input id="name" placeholder="Name"><br><br>
 <input id="mobile" placeholder="Mobile"><br><br>
 <input id="address" placeholder="Address"><br><br>
+
+<input id="distance" type="number" placeholder="Distance KM (Required)" min="1" oninput="updateCart()"><br><br>
+
 <input id="location" placeholder="GPS Location" readonly><br><br>
 
-<button class="location" onclick="getLocation()">📍 Get Location</button>
+<button class="loc" onclick="getLocation()">📍 Get Location</button>
 
-    <h1> DELIVERY CHARGE 3 RUPEE KILOMETER</h1>
 <h2>🍔 Menu</h2>
 
 <div class="food">
-Burger ₹99 <button class="add" onclick="add('Burger',99)">Add</button>
-</div>
-
-<div class="food">
-<img src="https://images.unsplash.com/photo-1601924582971-3f9f3f9c8c1b"
-width="100%" style="border-radius:10px;">
-
+<img src="https://images.unsplash.com/photo-1601924582971-3f9f3f9c8c1b">
 <h3>Pizza</h3>
 <p>₹199</p>
-
-<button onclick="add('Pizza',199)">Add</button>
+<button class="add" onclick="add('Pizza',199)">Add</button>
 </div>
 
 <div class="food">
-Sandwich ₹79 <button class="add" onclick="add('Sandwich',79)">Add</button>
+<img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086">
+<h3>Burger</h3>
+<p>₹99</p>
+<button class="add" onclick="add('Burger',99)">Add</button>
 </div>
 
 <div class="food">
-Fries ₹69 <button class="add" onclick="add('Fries',69)">Add</button>
-</div>
-<div class="food">
-CAKE ₹69 <button class="add" onclick="add('CAKE',69)">Add</button>
-</div>
-<div class="food">
-Momos ₹120 <button class="add" onclick="add('Momos',120)">Add</button>
+<img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+<h3>Sandwich</h3>
+<p>₹79</p>
+<button class="add" onclick="add('Sandwich',79)">Add</button>
 </div>
 
 <div class="food">
-Pasta ₹150 <button class="add" onclick="add('Pasta',150)">Add</button>
+<img src="https://images.unsplash.com/photo-1604908176997-125f25cc500f">
+<h3>French Fries</h3>
+<p>₹69</p>
+<button class="add" onclick="add('Fries',69)">Add</button>
 </div>
 
 <div class="food">
-Cold Coffee ₹90 <button class="add" onclick="add('Cold Coffee',90)">Add</button>
-</div>
-
-<div class="food">
-Chicken Roll ₹110 <button class="add" onclick="add('Chicken Roll',110)">Add</button>
-</div>
-
-<div class="food">
-Noodles ₹130 <button class="add" onclick="add('Noodles',130)">Add</button>
-</div>
-
-<div class="food">
-Ice Cream ₹60 <button class="add" onclick="add('Ice Cream',60)">Add</button>
+<img src="https://images.unsplash.com/photo-1604152135912-04a022e23696">
+<h3>Pasta</h3>
+<p>₹150</p>
+<button class="add" onclick="add('Pasta',150)">Add</button>
 </div>
 
 <div id="cart">
@@ -130,12 +128,12 @@ Ice Cream ₹60 <button class="add" onclick="add('Ice Cream',60)">Add</button>
 <ul id="list"></ul>
 
 <p>Food Total: ₹<span id="total">0</span></p>
-<p>Delivery: ₹<span id="delivery">0</span></p>
+<p>Delivery (₹3/km): ₹<span id="delivery">0</span></p>
 <p><b>Grand Total: ₹<span id="grand">0</span></b></p>
 
 <p><b>Minimum Order ₹120 Required</b></p>
 
-<button class="remove" onclick="clearCart()">Clear Cart</button>
+<button class="clear" onclick="clearCart()">Clear Cart</button>
 <button class="order" onclick="order()">Order on WhatsApp</button>
 
 </div>
@@ -169,7 +167,7 @@ function updateCart(){
 
     let dist = Number(document.getElementById("distance").value);
 
-    let delivery = dist > 0 ? dist * 2 : 0;
+    let delivery = dist > 0 ? dist * 3 : 0;
 
     document.getElementById("total").innerText = total;
     document.getElementById("delivery").innerText = delivery;
@@ -202,7 +200,7 @@ function order(){
     }
 
     if(distance <= 0){
-        alert("Distance is compulsory (min 1 KM)");
+        alert("Distance required (min 1 KM)");
         return;
     }
 
@@ -216,7 +214,7 @@ function order(){
         return;
     }
 
-    let delivery = distance * 2;
+    let delivery = distance * 3;
     let grand = total + delivery;
 
     let msg =
@@ -229,7 +227,7 @@ Distance: ${distance} KM
 Location: ${location}
 
 Items:
-` + cart.map(i => i.name + " ₹" + i.price).join("\n") + `
+` + cart.map(i=>i.name+" ₹"+i.price).join("\n") + `
 
 Total: ₹${total}
 Delivery: ₹${delivery}
