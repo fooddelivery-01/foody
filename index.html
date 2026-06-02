@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Foody Food Delivery</title>
+<title>Foody Pro - Food Delivery</title>
 
 <style>
 body{
-    font-family:Arial,sans-serif;
-    background:#f4f4f4;
+    font-family:Arial;
     margin:0;
+    background:#f4f4f4;
 }
 
 header{
-    background:#ff6600;
+    background:#ff5722;
     color:white;
     text-align:center;
     padding:20px;
@@ -21,7 +21,7 @@ header{
 
 .container{
     width:90%;
-    max-width:800px;
+    max-width:900px;
     margin:auto;
     padding:20px;
 }
@@ -31,49 +31,25 @@ header{
     padding:15px;
     margin:10px 0;
     border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-input{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-    box-sizing:border-box;
 }
 
 button{
-    padding:10px 15px;
+    padding:10px;
     border:none;
-    border-radius:5px;
     cursor:pointer;
-    margin-top:5px;
+    border-radius:5px;
 }
 
-.add-btn{
-    background:#28a745;
-    color:white;
-}
-
-.order-btn{
-    background:#25D366;
-    color:white;
-}
-
-.location-btn{
-    background:#007bff;
-    color:white;
-}
-
-.clear-btn{
-    background:red;
-    color:white;
-}
+.add{background:green;color:white;}
+.remove{background:red;color:white;}
+.order{background:#25D366;color:white;}
+.location{background:#007bff;color:white;}
 
 #cart{
     background:white;
     padding:15px;
-    border-radius:10px;
     margin-top:20px;
+    border-radius:10px;
 }
 </style>
 </head>
@@ -81,72 +57,80 @@ button{
 <body>
 
 <header>
-<h1>🍔 Foody Food Delivery</h1>
-<p>Order Delicious Food Online</p>
+<h1>🍔 Foody Pro</h1>
+<p>Fast & Smart Food Delivery</p>
 </header>
 
 <div class="container">
 
 <h2>Customer Details</h2>
 
-<input type="text" id="name" placeholder="Full Name" required>
-<input type="tel" id="mobile" placeholder="Mobile Number" required>
-<input type="email" id="email" placeholder="Email Address">
-<input type="text" id="address" placeholder="Full Address" required>
+<input id="name" placeholder="Name"><br><br>
+<input id="mobile" placeholder="Mobile"><br><br>
+<input id="address" placeholder="Address"><br><br>
 
-<input type="number"
-id="distance"
-placeholder="Distance (KM)"
-oninput="updateTotals()"
-required>
+<input id="distance" type="number" placeholder="Distance KM (Required)" min="1" oninput="updateCart()"><br><br>
 
-<input type="text" id="location" placeholder="Current Location" readonly>
+<input id="location" placeholder="GPS Location" readonly><br><br>
 
-<button class="location-btn" onclick="getLocation()">
-📍 Get Current Location
-</button>
+<button class="location" onclick="getLocation()">📍 Get Location</button>
 
-<h2>Menu</h2>
+<h2>🍔 Menu</h2>
 
 <div class="food">
-<h3>Burger</h3>
-<p>₹99</p>
-<button class="add-btn" onclick="addToCart('Burger',99)">Add To Cart</button>
+Burger ₹99 <button class="add" onclick="add('Burger',99)">Add</button>
 </div>
 
 <div class="food">
-<h3>Pizza</h3>
-<p>₹199</p>
-<button class="add-btn" onclick="addToCart('Pizza',199)">Add To Cart</button>
+Pizza ₹199 <button class="add" onclick="add('Pizza',199)">Add</button>
 </div>
 
 <div class="food">
-<h3>Sandwich</h3>
-<p>₹79</p>
-<button class="add-btn" onclick="addToCart('Sandwich',79)">Add To Cart</button>
+Sandwich ₹79 <button class="add" onclick="add('Sandwich',79)">Add</button>
 </div>
 
 <div class="food">
-<h3>French Fries</h3>
-<p>₹69</p>
-<button class="add-btn" onclick="addToCart('French Fries',69)">Add To Cart</button>
+Fries ₹69 <button class="add" onclick="add('Fries',69)">Add</button>
+</div>
+
+<div class="food">
+Momos ₹120 <button class="add" onclick="add('Momos',120)">Add</button>
+</div>
+
+<div class="food">
+Pasta ₹150 <button class="add" onclick="add('Pasta',150)">Add</button>
+</div>
+
+<div class="food">
+Cold Coffee ₹90 <button class="add" onclick="add('Cold Coffee',90)">Add</button>
+</div>
+
+<div class="food">
+Chicken Roll ₹110 <button class="add" onclick="add('Chicken Roll',110)">Add</button>
+</div>
+
+<div class="food">
+Noodles ₹130 <button class="add" onclick="add('Noodles',130)">Add</button>
+</div>
+
+<div class="food">
+Ice Cream ₹60 <button class="add" onclick="add('Ice Cream',60)">Add</button>
 </div>
 
 <div id="cart">
 
 <h2>🛒 Cart</h2>
 
-<ul id="cartItems"></ul>
+<ul id="list"></ul>
 
-<h3>Food Total: ₹<span id="total">0</span></h3>
-<h3>Delivery Charge: ₹<span id="deliveryCharge">0</span></h3>
-<h3>Grand Total: ₹<span id="grandTotal">0</span></h3>
+<p>Food Total: ₹<span id="total">0</span></p>
+<p>Delivery: ₹<span id="delivery">0</span></p>
+<p><b>Grand Total: ₹<span id="grand">0</span></b></p>
 
 <p><b>Minimum Order ₹120 Required</b></p>
 
-<button class="clear-btn" onclick="clearCart()">🗑 Remove All Items</button>
-
-<button class="order-btn" onclick="orderWhatsApp()">Order on WhatsApp</button>
+<button class="remove" onclick="clearCart()">Clear Cart</button>
+<button class="order" onclick="order()">Order on WhatsApp</button>
 
 </div>
 
@@ -154,115 +138,98 @@ required>
 
 <script>
 
-let items = [];
+let cart = [];
 let total = 0;
 
-function addToCart(name, price){
-    items.push(name + " - ₹" + price);
+function add(name,price){
+    cart.push({name,price});
     total += price;
 
     let li = document.createElement("li");
-    li.innerText = name + " - ₹" + price;
-    document.getElementById("cartItems").appendChild(li);
+    li.innerText = name + " ₹" + price;
+    document.getElementById("list").appendChild(li);
 
-    updateTotals();
-
-    alert(name + " added to cart");
-}
-
-function updateTotals(){
-
-    let distance = Number(document.getElementById("distance").value) || 0;
-
-    let deliveryCharge = distance * 2;
-
-    let grandTotal = total + deliveryCharge;
-
-    document.getElementById("total").innerText = total;
-    document.getElementById("deliveryCharge").innerText = deliveryCharge;
-    document.getElementById("grandTotal").innerText = grandTotal;
+    updateCart();
 }
 
 function clearCart(){
-
-    items = [];
+    cart = [];
     total = 0;
+    document.getElementById("list").innerHTML = "";
+    updateCart();
+}
 
-    document.getElementById("cartItems").innerHTML = "";
+function updateCart(){
 
-    updateTotals();
+    let dist = Number(document.getElementById("distance").value);
 
-    alert("Cart Cleared");
+    let delivery = dist > 0 ? dist * 2 : 0;
+
+    document.getElementById("total").innerText = total;
+    document.getElementById("delivery").innerText = delivery;
+    document.getElementById("grand").innerText = total + delivery;
 }
 
 function getLocation(){
 
     if(navigator.geolocation){
-
-        navigator.geolocation.getCurrentPosition(function(position){
-
-            let lat = position.coords.latitude;
-            let lng = position.coords.longitude;
-
-            let mapLink = "https://www.google.com/maps?q=" + lat + "," + lng;
-
-            document.getElementById("location").value = mapLink;
-
-        }, function(){
-            alert("Location Access Denied");
+        navigator.geolocation.getCurrentPosition(pos=>{
+            document.getElementById("location").value =
+            "https://maps.google.com/?q=" + pos.coords.latitude + "," + pos.coords.longitude;
         });
-
-    } else {
-        alert("Geolocation Not Supported");
     }
 }
 
-function orderWhatsApp(){
+function order(){
 
-    let customerName = document.getElementById("name").value;
+    let name = document.getElementById("name").value;
     let mobile = document.getElementById("mobile").value;
-    let email = document.getElementById("email").value;
     let address = document.getElementById("address").value;
     let distance = document.getElementById("distance").value;
     let location = document.getElementById("location").value;
 
-    if(customerName==="" || mobile==="" || address==="" || distance===""){
-        alert("Please fill Name, Mobile, Address and Distance");
+    distance = Number(distance);
+
+    if(name=="" || mobile=="" || address==""){
+        alert("Fill all details");
         return;
     }
 
-    if(items.length===0){
-        alert("Cart is empty");
+    if(distance <= 0){
+        alert("Distance is compulsory (min 1 KM)");
+        return;
+    }
+
+    if(cart.length==0){
+        alert("Cart empty");
         return;
     }
 
     if(total < 120){
-        alert("Minimum Order Amount is ₹120");
+        alert("Minimum order ₹120 required");
         return;
     }
 
-    let deliveryCharge = Number(distance) * 2;
-    let grandTotal = total + deliveryCharge;
+    let delivery = distance * 2;
+    let grand = total + delivery;
 
-    let message =
-    "🍔 FOODY ORDER\n\n" +
-    "Name: " + customerName + "\n" +
-    "Mobile: " + mobile + "\n" +
-    "Email: " + email + "\n" +
-    "Address: " + address + "\n" +
-    "Distance: " + distance + " KM\n" +
-    "Location: " + location + "\n\n" +
-    "Items:\n" +
-    items.join("\n") +
-    "\n\nFood Total: ₹" + total +
-    "\nDelivery Charge: ₹" + deliveryCharge +
-    "\nGrand Total: ₹" + grandTotal;
+    let msg =
+`🍔 FOODY ORDER
 
-    let phone = "8449196052";
+Name: ${name}
+Mobile: ${mobile}
+Address: ${address}
+Distance: ${distance} KM
+Location: ${location}
 
-    let url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+Items:
+` + cart.map(i => i.name + " ₹" + i.price).join("\n") + `
 
-    window.open(url, "_blank");
+Total: ₹${total}
+Delivery: ₹${delivery}
+Grand: ₹${grand}`;
+
+    window.open("https://wa.me/8449196052?text=" + encodeURIComponent(msg), "_blank");
 }
 
 </script>
