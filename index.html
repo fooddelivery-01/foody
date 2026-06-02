@@ -201,6 +201,19 @@ function getLocation(){
 }
 
 function orderWhatsApp(){
+    if(total < 120){
+    alert("Minimum order amount is ₹120");
+    return;
+}
+    function orderWhatsApp(){
+
+    if(total < 120){
+        alert("Minimum order amount is ₹120");
+        return;
+    }
+
+    // Rest of your order code here
+}
 
     let customerName =
     document.getElementById("name").value;
