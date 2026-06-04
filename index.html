@@ -115,6 +115,7 @@ body{
     background-repeat:no-repeat;
     background-attachment:fixed;
 }
+
 </style>
 
 
@@ -193,12 +194,36 @@ body{
 <h3>Sandwich ₹59</h3>
 <button class="add" onclick="add('Sandwich',59)">Add</button>
 </div>
-
+<div class="food">
+<h3>Momos ₹30</h3>
+<button class="add" onclick="add('momos',30)">Add</button>
+</div>
 <div class="food">
 <h3>Samosa ₹15</h3>
 <button class="add" onclick="add('Samosa',15)">Add</button>
-<img src="https://images.unsplash.com/photo-1550507992-eb63ffee0847" style="width:250px;border-radius:15px;">
 </div>
+
+<div class="food">
+<div class="food">
+
+    <h3>Patiz ₹40 Each</h3>
+
+    <select id="patizQty">
+        <option value="1">1 Patiz ₹40</option>
+        <option value="2">2 Patiz ₹80</option>
+        <option value="3">3 Patiz ₹120</option>
+        <option value="4">4 Patiz ₹160</option>
+        <option value="5">5 Patiz ₹200</option>
+    </select>
+
+    <br><br>
+
+    <button class="add" onclick="addPatiz()">
+        ➕ Add Patiz
+    </button>
+
+</div>
+
 <div class="food">
 
 
@@ -210,7 +235,7 @@ body{
         font-size:22px;
         text-align:center;
     ">
-     <div style="
+     
     border:4px solid black;
     padding:20px;
     width:350px;
@@ -231,41 +256,25 @@ body{
     <button class="add" onclick="addColdDrink()">➕ Add Cold Drink</button>
 
     <button class="clear" onclick="removeColdDrink()">➖ Remove Cold Drink</button>
-<div class="food">
 
-   <div style="
-    border:4px solid black;
-    padding:20px;
-    width:350px;
-    margin:20px auto;
-    background:white;
-    text-align:center;
-">
+</div>
 
-    <h3 style="font-size:35px;">🥤 Cold Drinks</h3>
+
+
+    <div class="food">
     <h3>🥛 Milk ₹55/Liter</h3>
-
-    <select id="milkQty" style="
-        width:250px;
-        height:50px;
-        font-size:20px;
-    ">
+    
+    <select id="milkQty" style="width:300px; height:60px; font-size:22px;">
         <option value="1">1 Liter ₹55</option>
         <option value="2">2 Liter ₹110</option>
         <option value="3">3 Liter ₹165</option>
         <option value="4">4 Liter ₹220</option>
         <option value="5">5 Liter ₹275</option>
     </select>
-
+    
     <br><br>
-
-    <button class="add" onclick="addMilk()">
-        ➕ Add Milk
-    </button>
-
-</div>
-
-</div>
+    
+    <button class="add" onclick="addMilk()">➕ Add Milk</button>
 </div>
 </div>
 
@@ -374,8 +383,28 @@ function addMilk(){
     document.getElementById("list").appendChild(li);
 
     updateCart();
-}
 
+}
+function addPatiz(){
+
+    let qty = Number(document.getElementById("patizQty").value);
+
+    let price = qty * 40;
+
+    cart.push({
+        name: qty + " Patiz",
+        price: price
+    });
+
+    total += price;
+
+    let li = document.createElement("li");
+    li.innerText = qty + " Patiz ₹" + price;
+
+    document.getElementById("list").appendChild(li);
+
+    updateCart();
+}
 function updateCart(){
 
     document.getElementById("total").innerText = total;
