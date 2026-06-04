@@ -18,7 +18,7 @@ header{
     background:#ff5722;
     color:white;
     text-align:center;
-    padding:100px;
+    padding:20px;
 }
 
 .container{
@@ -66,7 +66,7 @@ input, select{
     width:100%;
     max-width:500px;
     height:70px;
-    font-size:30px;
+    font-size:18px;
     padding:10px;
     margin:10px 0;
 }
@@ -82,8 +82,8 @@ input, select{
 }
 
 .details-box label{
-    font-size:40px;
-    font-weight:900;
+    font-size:22px;
+    font-weight:500;
     color:black;
     display:block;
     margin-bottom:10px;
@@ -93,7 +93,7 @@ input, select{
     width:100%;
     max-width:700px;
     height:70px;
-    font-size:30px;
+    font-size:18px;
     border:4px solid black;
     border-radius:10px;
     padding:10px;
@@ -118,14 +118,14 @@ body{
 <header>
     
     <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd"
-     style="width:350px; height:auto; border-radius:10px; float:left; margin-right:15px;">
-<h1 style="font-size: 150px; font-family: Arial, sans-serif;">FOODY HUB</h1>
+     style="width:100px; height:auto; border-radius:10px; float:right; margin-right:15px;">
+<h1 style="font-size: 80px; font-family: Arial, sans-serif;">FOODY HUB</h1>
 <p style="font-size: 50px; font-family: Arial, sans-serif;">Fast & Smart Food Delivery</p>
 </header>
 
 <div class="details-box">
 
-    <h2 style="font-size:90px;font-weight:900;color:black;text-align:center;margin-top:0;">
+    <h2 style="font-size:50px;font-weight:900;color:black;text-align:center;margin-top:0;">
         Customer Details
     </h2>
 
@@ -172,7 +172,7 @@ body{
 <div class="food">
 <h3>Pizza ₹99</h3>
 <button class="add" onclick="add('Pizza',99)">Add</button>
-<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd" style="width:250px;border-radius:px;">
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd" style="width:150px;border-radius:px;">
 </div>
 
 <div class="food">
@@ -232,7 +232,8 @@ body{
     background:white;
     text-align:center;
 ">
-<h3>milk</h3>
+
+    <h3 style="font-size:35px;">🥤 Cold Drinks</h3>
     <h3>🥛 Milk ₹55/Liter</h3>
 
     <select id="milkQty" style="
@@ -460,6 +461,7 @@ Grand: ₹${grand}`;
 
     window.open("https://wa.me/8449196052?text=" + encodeURIComponent(msg), "_blank");
 }
+
 
 </script>
 
