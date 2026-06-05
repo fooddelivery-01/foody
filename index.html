@@ -1,505 +1,869 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Foody - Taste Karo, Fan Ban Jaoge</title>
-    <meta name="description" content="Ek baar Foody try karo. Fresh, hygienic aur dil khush kar dene wala swaad. Online order, fast delivery.">
-    
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    
-    <style>
-    body{
-        font-family:Arial;
-        margin:0;
-        background:#f4f4f4;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FOODY PREMIUM v4.0</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+scroll-behavior:smooth;
+}
+
 body{
-    font-family:Arial;
-    margin:0;
-    background:#f4f4f4;
+background:#f5f5f5;
 }
 
-header{
-    background:#ff5722;
-    color:white;
-    text-align:center;
-    padding:20px;
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:15px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,.85);
+backdrop-filter:blur(10px);
+z-index:999;
 }
 
-.container{
-    width:90%;
-    max-width:900px;
-    margin:auto;
-    padding:20px;
+.logo{
+font-size:32px;
+font-weight:800;
+color:#ff9800;
 }
 
+nav ul{
+display:flex;
+list-style:none;
+gap:20px;
+}
+
+nav ul li a{
+color:white;
+text-decoration:none;
+font-weight:600;
+}
+
+.hero{
+height:100vh;
+background:
+linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');
+background-size:cover;
+background-position:center;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+padding:20px;
+}
+
+.hero h1{
+font-size:70px;
+}
+
+.hero span{
+color:#ff9800;
+}
+
+.btn{
+background:#ff9800;
+color:white;
+padding:12px 30px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+font-size:18px;
+}
+
+section{
+padding:90px 8%;
+}
+
+.title{
+font-size:40px;
+text-align:center;
+margin-bottom:30px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+input,select,textarea{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:1px solid #ddd;
+border-radius:10px;
+}
+
+.menu-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
 .food{
-    background:#b8a9a9;
-    padding:15px;
-    margin:20px 0;
-    border-radius:15px;
-    text-align:center;
-    color:white;
+background:white;
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
 }
 
-button{
-    padding:12px 25px;
-    margin-top:10px;
-    border:none;
-    border-radius:30px;
-    cursor:pointer;
-    font-size:16px;
-    font-weight:bold;
-    transition:0.3s;
+.food img{
+width:100%;
+height:220px;
+object-fit:cover;
 }
 
-button:hover{transform:scale(1.05);}
-
-.add{background:#e91e63;color:white;}
-.clear{background:red;color:white;}
-.order{background:#25D366;color:white;}
-.loc{background:#007bff;color:white;}
-
-#cart{
-    background:#fff;
-    padding:15px;
-    margin-top:20px;
-    border-radius:10px;
+.food-content{
+padding:20px;
+text-align:center;
 }
 
-input, select{
-    width:100%;
-    max-width:300px;
-    height:70px;
-    font-size:18px;
-    padding:10px;
-    margin:10px 0;
+.add-btn{
+background:#ff9800;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:25px;
+cursor:pointer;
 }
 
-
-.details-box{
-    border:8px solid black;
-    border-radius:15px;
-    padding:30px;
-    margin:20px 0;
-    background:white;
-    font-weight:bold;
+.cart-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:white;
+padding:15px;
+margin:10px 0;
+border-radius:15px;
 }
 
-.details-box label{
-    font-size:22px;
-    font-weight:300;
-    color:black;
-    display:block;
-    margin-bottom:10px;
+.qty-btn{
+padding:5px 12px;
+margin:0 5px;
+border:none;
+background:#ff9800;
+color:white;
+border-radius:5px;
+cursor:pointer;
 }
 
-.details-box input{
-    width:100%;
-    max-width:700px;
-    height:70px;
-    font-size:18px;
-    border:4px solid black;
-    border-radius:10px;
-    padding:10px;
+.total{
+font-size:30px;
+font-weight:bold;
+color:#ff9800;
+margin-top:20px;
 }
 
-body{
-    background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920');
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-attachment:fixed;
+footer{
+background:#111;
+color:white;
+text-align:center;
+padding:30px;
 }
 
-</style>
+@media(max-width:768px){
 
+.hero h1{
+font-size:45px;
+}
 
-.hidden{display:none;}
+nav ul{
+gap:10px;
+font-size:14px;
+}
+}
+
 </style>
 </head>
-
 <body>
 
-<header>
-    
-    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd"
-     style="width:100px; height:auto; border-radius:10px; float:right; margin-right:15px;">
-<h1 style="font-size: 50px; font-family: Arial, sans-serif;">FOODY HUB</h1>
-<p style="font-size: 30px; font-family: Arial, sans-serif;">Fast & Smart Food Delivery</p>
-</header>
+<nav>
 
-<div class="details-box">
+<div class="logo">
+FOODY
+</div>
 
-    <h2 style="font-size:50px;font-weight:900;color:black;text-align:center;margin-top:0;">
-        Customer Details
-    </h2>
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#customer">Customer</a></li>
+<li><a href="#menu">Menu</a></li>
+<li><a href="#cart">Cart</a></li>
+</ul>
 
-    <label>Name</label>
-    <input id="name" type="text">
+</nav>
 
-    <br><br>
+<section class="hero" id="home">
 
-    <label>Mobile Number</label>
-    <input id="mobile" type="text">
+<div>
 
-    <br><br>
+<h1>
+Welcome To <span>FOODY</span>
+</h1>
 
-    <label>Address</label>
-    <input id="address" type="text">
-    <h3>Payment Method</h3>
-<select id="payment" onchange="togglePayment()">
-    <option value="COD">Cash on Delivery</option>
-    <option value="ONLINE">Online Payment</option>
+<p>
+Fast Delivery • Fresh Food • Best Taste
+</p>
+
+<br>
+
+<button class="btn"
+onclick="document.getElementById('customer').scrollIntoView()">
+Order Now
+</button>
+
+</div>
+
+</section>
+
+<section id="customer">
+
+<h2 class="title">
+Customer Details
+</h2>
+
+<div class="card">
+
+<input
+type="text"
+id="name"
+placeholder="Full Name"
+required>
+
+<input
+type="tel"
+id="phone"
+placeholder="Mobile Number"
+required>
+
+<textarea
+id="address"
+placeholder="Delivery Address"
+required>
+</textarea>
+
+<button class="btn"
+onclick="getLocation()">
+📍 Get GPS Location
+</button>
+
+<br><br>
+
+<p id="locationText">
+Location Not Selected
+</p>
+<div id="mapContainer" style="margin-top:20px;"></div>
+
+<a id="mapLink"
+target="_blank"
+class="btn"
+style="display:none;margin-top:10px;">
+Open in Google Maps
+</a>
+
+</div>
+
+</section>
+
+<section id="menu">
+
+<h2 class="title">
+Our Menu
+</h2>
+
+<input
+type="text"
+id="search"
+placeholder="Search Food..."
+onkeyup="searchFood()">
+
+<br><br>
+
+<select id="categoryFilter"
+onchange="filterCategory()">
+
+<option value="all">
+All Categories
+</option>
+
+<option value="fastfood">
+Fast Food
+</option>
+
+<option value="drinks">
+Cold Drinks
+</option>
+
+<option value="milk">
+Milk
+</option>
+
 </select>
 
-<div id="qrBox" class="hidden">
-    <p><b>Pay UPI:</b> 8449196052@nyes</p>
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=8449196052@nyes&pn=FOODY&cu=INR">
-    <button onclick="markPaid()" style="background:green;color:white;">I Have Paid</button>
-    <p id="paymentStatus">Payment Status: ❌ Not Paid</p>
+<br><br>
 
-<input id="location" placeholder="GPS Location" readonly>
-<button class="loc" onclick="getLocation()">📍 Get Location</button>
+<div class="menu-grid" id="menuGrid">
+    <!-- BURGER -->
 
-<h2 class="menu-title">🍔 Menu</h2>
+<div class="food fastfood">
 
-<style>
-.menu-title{
-    font-size:50px;
-    text-align:center;
-    font-weight:bold;
-    border-bottom:4px solid #ff6600;
-    padding-bottom:10px;
-    margin-bottom:20px;
-}
-</style>
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd">
 
-<div class="food">
-<h3>Pizza ₹99</h3>
-<button class="add" onclick="add('Pizza',99)">Add</button>
-<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd" style="width:150px;border-radius:px;">
-</div>
+<div class="food-content">
 
-<div class="food">
-<h3>Burger ₹49</h3>
-<button class="add" onclick="add('Burger',49)">Add</button>
-</div>
+<h3>Burger ₹99</h3>
 
-<div class="food">
-<h3>Sandwich ₹59</h3>
-<button class="add" onclick="add('Sandwich',59)">Add</button>
-</div>
-<div class="food">
-<h3>Momos ₹30</h3>
-<button class="add" onclick="add('momos',30)">Add</button>
-</div>
-<div class="food">
-<h3>Samosa ₹15</h3>
-<button class="add" onclick="add('Samosa',15)">Add</button>
-</div>
+<button class="add-btn"
+onclick="addItem('Burger',99)">
+Add To Cart
+</button>
 
-<div class="food">
-<div class="food">
-
-    <h3>Patiz ₹40 Each</h3>
-
-    <select id="patizQty">
-        <option value="1">1 Patiz ₹40</option>
-        <option value="2">2 Patiz ₹80</option>
-        <option value="3">3 Patiz ₹120</option>
-        <option value="4">4 Patiz ₹160</option>
-        <option value="5">5 Patiz ₹200</option>
-    </select>
-
-    <br><br>
-
-    <button class="add" onclick="addPatiz()">
-        ➕ Add Patiz
-    </button>
-
-</div>
-
-<div class="food">
-
-
-    <h3 style="font-size:35px;">🥤 Cold Drinks</h3>
-
-    <select id="coldDrink" style="
-        width:300px;
-        height:60px;
-        font-size:22px;
-        text-align:center;
-    ">
-     
-    border:4px solid black;
-    padding:20px;
-    width:350px;
-    margin:20px auto;
-    background:white;
-    text-align:center;
-">
-        <option value="">Select Cold Drink</option>
-        <option value="20">Coca Cola ₹20</option>
-        <option value="20">Pepsi ₹20</option>
-        <option value="20">Sprite ₹20</option>
-        <option value="20">Fanta ₹20</option>
-        <option value="30">Maaza ₹30</option>
-    </select>
-
-    <br><br>
-
-    <button class="add" onclick="addColdDrink()">➕ Add Cold Drink</button>
-
-    <button class="clear" onclick="removeColdDrink()">➖ Remove Cold Drink</button>
-
-</div>
-
-
-
-    <div class="food">
-    <h3>🥛 Milk ₹55/Liter</h3>
-    
-    <select id="milkQty" style="width:300px; height:60px; font-size:22px;">
-        <option value="1">1 Liter ₹55</option>
-        <option value="2">2 Liter ₹110</option>
-        <option value="3">3 Liter ₹165</option>
-        <option value="4">4 Liter ₹220</option>
-        <option value="5">5 Liter ₹275</option>
-    </select>
-    
-    <br><br>
-    
-    <button class="add" onclick="addMilk()">➕ Add Milk</button>
 </div>
 </div>
 
-<div id="cart">
-    <h2>🛒 Cart</h2>
-<ul id="list"></ul>
+<!-- PIZZA -->
 
-<p>Food Total: ₹<span id="total">0</span></p>
-<p>Delivery: ₹<span id="delivery">30</span></p>
-<p><b>Grand Total: ₹<span id="grandTotal">0</span></b></p>
+<div class="food fastfood">
 
-<p><b>Minimum Order ₹120 Required</b></p>
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591">
 
-<button class="clear" onclick="clearCart()">Clear Cart</button>
-<button class="order" onclick="order()">Order on WhatsApp</button>
+<div class="food-content">
+
+<h3>Pizza ₹199</h3>
+
+<button class="add-btn"
+onclick="addItem('Pizza',199)">
+Add To Cart
+</button>
+
+</div>
+</div>
+
+<!-- MOMOS -->
+
+<div class="food fastfood">
+
+<img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec">
+
+<div class="food-content">
+
+<h3>Momos ₹80</h3>
+
+<button class="add-btn"
+onclick="addItem('Momos',80)">
+Add To Cart
+</button>
+
+</div>
+</div>
+
+<!-- COLD DRINK -->
+
+<div class="food drinks">
+
+<img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e">
+
+<div class="food-content">
+
+<h3>Coca Cola ₹20</h3>
+
+<button class="add-btn"
+onclick="addItem('Coca Cola',20)">
+Add To Cart
+</button>
+
+</div>
+</div>
+
+<!-- PEPSI -->
+
+<div class="food drinks">
+
+<img src="https://images.unsplash.com/photo-1581006852262-e4307cf6283a">
+
+<div class="food-content">
+
+<h3>Pepsi ₹20</h3>
+
+<button class="add-btn"
+onclick="addItem('Pepsi',20)">
+Add To Cart
+</button>
+
+</div>
+</div>
+
+<!-- SPRITE -->
+
+<div class="food drinks">
+
+<img src="https://images.unsplash.com/photo-1624517452488-04869289c4ca">
+
+<div class="food-content">
+
+<h3>Sprite ₹20</h3>
+
+<button class="add-btn"
+onclick="addItem('Sprite',20)">
+Add To Cart
+</button>
+
+</div>
+</div>
+
+<!-- MILK -->
+
+<div class="food milk">
+
+<img src="https://images.unsplash.com/photo-1550583724-b2692b85b150">
+
+<div class="food-content">
+
+<h3>Milk 1 Litre ₹55</h3>
+
+<button class="add-btn"
+onclick="addItem('Milk 1L',55)">
+Add To Cart
+</button>
+
+</div>
+</div>
+
+<!-- MILK 2L -->
+
+<div class="food milk">
+
+<img src="https://images.unsplash.com/photo-1563636619-e9143da7973b">
+
+<div class="food-content">
+
+<h3>Milk 2 Litre ₹110</h3>
+
+<button class="add-btn"
+onclick="addItem('Milk 2L',110)">
+Add To Cart
+</button>
+
+</div>
 </div>
 
 </div>
 
-<audio id="successSound">
-  <source src="https://www.soundjay.com/buttons/sounds/button-3.mp3">
-</audio>
+</section>
+
+<section id="cart">
+
+<h2 class="title">
+Your Cart
+</h2>
+
+<div id="cartItems">
+</div>
+
+<div class="total">
+
+Total ₹
+<span id="total">
+0
+</span>
+
+</div>
+
+<br>
+
+<button class="btn"
+onclick="placeOrder()">
+
+Place Order
+
+</button>
+
+</section>
+<footer>
+
+<h2>FOODY PREMIUM v4.0</h2>
+
+<br>
+
+<p>📞 8449196053 | 8010559951</p>
+
+<p>✉️ rishabhtenguriya52@gmail.com</p>
+
+<br>
+
+<p>© 2026 Foody Premium. All Rights Reserved.</p>
+
+</footer>
 
 <script>
 
 let cart = [];
+
+let gpsLocation = "";
+
+function addItem(name,price){
+
+let item = cart.find(x => x.name === name);
+
+if(item){
+
+item.qty++;
+
+}else{
+
+cart.push({
+name:name,
+price:price,
+qty:1
+});
+
+}
+
+renderCart();
+}
+
+function renderCart(){
+
+let html = "";
+
 let total = 0;
-let isPaid = false;
 
-const DELIVERY_CHARGE = 30;
+cart.forEach(item=>{
 
-function add(name, price){
-    cart.push({name, price});
-    total += price;
+total += item.price * item.qty;
 
-    let li = document.createElement("li");
-    li.innerText = name + " ₹" + price;
-    document.getElementById("list").appendChild(li);
-    
+html += `
 
-    updateCart();
-}
-function addColdDrink(){
+<div class="cart-item">
 
-    let select = document.getElementById("coldDrink");
+<div>
 
-    let drinkName = select.options[select.selectedIndex].text;
-    let drinkPrice = Number(select.value);
+<b>${item.name}</b>
 
-    if(select.value === ""){
-        alert("Select Cold Drink");
-        return;
-    }
+<br>
 
-    cart.push({
-        name: drinkName.split(" ₹")[0],
-        price: drinkPrice
-    });
+₹${item.price}
 
-    total += drinkPrice;
+</div>
 
-    let li = document.createElement("li");
-    li.innerText = drinkName;
-    li.id = "coldDrinkItem";
+<div>
 
-    document.getElementById("list").appendChild(li);
+<button
+class="qty-btn"
+onclick="decreaseQty('${item.name}')">
+-
+</button>
 
-    updateCart();
-}
+${item.qty}
 
-function removeColdDrink(){
+<button
+class="qty-btn"
+onclick="increaseQty('${item.name}')">
++
+</button>
 
-    let item = document.getElementById("coldDrinkItem");
+<button
+class="qty-btn"
+onclick="removeItem('${item.name}')">
 
-    if(item){
-        let price = Number(item.innerText.split("₹")[1]);
+Remove
 
-        total -= price;
-        item.remove();
+</button>
 
-        updateCart();
-    }
-}
-function clearCart(){
-    cart = [];
-    total = 0;
-    document.getElementById("list").innerHTML = "";
-    updateCart();
-}
-function addMilk(){
+</div>
 
-    let qty = Number(document.getElementById("milkQty").value);
+</div>
 
-    let price = qty * 55;
+`;
 
-    cart.push({
-        name: qty + " Liter Milk",
-        price: price
-    });
+});
 
-    total += price;
+document.getElementById("cartItems").innerHTML = html;
 
-    let li = document.createElement("li");
-    li.innerText = qty + " Liter Milk ₹" + price;
-
-    document.getElementById("list").appendChild(li);
-
-    updateCart();
+document.getElementById("total").innerText = total;
 
 }
-function addPatiz(){
 
-    let qty = Number(document.getElementById("patizQty").value);
+function increaseQty(name){
 
-    let price = qty * 40;
+let item = cart.find(x => x.name === name);
 
-    cart.push({
-        name: qty + " Patiz",
-        price: price
-    });
+item.qty++;
 
-    total += price;
+renderCart();
 
-    let li = document.createElement("li");
-    li.innerText = qty + " Patiz ₹" + price;
-
-    document.getElementById("list").appendChild(li);
-
-    updateCart();
 }
-function updateCart(){
 
-    document.getElementById("total").innerText = total;
-    document.getElementById("delivery").innerText = DELIVERY_CHARGE;
-    document.getElementById("grandTotal").innerText = total + DELIVERY_CHARGE;
+function decreaseQty(name){
+
+let item = cart.find(x => x.name === name);
+
+item.qty--;
+
+if(item.qty <= 0){
+
+cart = cart.filter(x => x.name !== name);
+
+}
+
+renderCart();
+
+}
+
+function removeItem(name){
+
+cart = cart.filter(x => x.name !== name);
+
+renderCart();
+
 }
 
 function getLocation(){
-    navigator.geolocation.getCurrentPosition(pos=>{
-        document.getElementById("location").value =
-        "https://maps.google.com/?q=" + pos.coords.latitude + "," + pos.coords.longitude;
-    });
+
+if(navigator.geolocation){
+
+navigator.geolocation.getCurrentPosition(
+
+function(position){
+
+let lat =
+position.coords.latitude;
+
+let lng =
+position.coords.longitude;
+
+gpsLocation =
+lat + "," + lng;
+
+document.getElementById(
+"locationText"
+).innerHTML =
+"✅ GPS Location Captured";
+
+document.getElementById(
+"mapContainer"
+).innerHTML =
+
+`<iframe
+width="100%"
+height="300"
+style="border:0;border-radius:15px;"
+src="https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed">
+</iframe>`;
+
+document.getElementById(
+"mapLink"
+).href =
+`https://www.google.com/maps?q=${lat},${lng}`;
+
+document.getElementById(
+"mapLink"
+).style.display =
+"inline-block";
+
+},
+
+function(){
+
+alert(
+"Please allow GPS access."
+);
+
 }
 
-function togglePayment(){
-    let method = document.getElementById("payment").value;
+);
 
-    document.getElementById("qrBox").style.display =
-        method === "ONLINE" ? "block" : "none";
+}else{
 
-    isPaid = (method === "COD");
-    updatePaymentUI();
+alert(
+"Geolocation not supported."
+);
+
 }
 
-function updatePaymentUI(){
-    document.getElementById("paymentStatus").innerText =
-        "Payment Status: " + (isPaid ? "✅ Success" : "❌ Not Paid");
+}
+function searchFood(){
+
+let input =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+let foods =
+document.querySelectorAll(".food");
+
+foods.forEach(food=>{
+
+let text =
+food.innerText.toLowerCase();
+
+food.style.display =
+text.includes(input)
+? "block"
+: "none";
+
+});
+
 }
 
-function markPaid(){
-    isPaid = true;
-    updatePaymentUI();
+function filterCategory(){
 
-    document.getElementById("successSound").play();
+let category =
+document.getElementById(
+"categoryFilter"
+).value;
 
-    confetti({
-        particleCount: 120,
-        spread: 80,
-        origin: { y: 0.6 }
-    });
+let foods =
+document.querySelectorAll(".food");
 
-    alert("Payment Successful ✔");
+foods.forEach(food=>{
+
+if(
+category==="all"
+){
+
+food.style.display="block";
+
+}else{
+
+food.style.display =
+food.classList.contains(category)
+? "block"
+: "none";
+
 }
 
-function order(){
+});
 
-    let name = document.getElementById("name").value;
-    let mobile = document.getElementById("mobile").value;
-    let address = document.getElementById("address").value;
-    let location = document.getElementById("location").value;
-    let payment = document.getElementById("payment").value;
-
-    if(!name || !mobile || !address){
-        alert("Fill all details");
-        return;
-    }
-
-    if(cart.length === 0){
-        alert("Cart empty");
-        return;
-    }
-
-    if(total < 120){
-        alert("Minimum order ₹120 required");
-        return;
-    }
-
-    if(payment === "ONLINE" && !isPaid){
-        alert("Please complete payment first!");
-        return;
-    }
-
-    let grand = total + DELIVERY_CHARGE;
-
-    let itemsText = cart.map(i => i.name + " - ₹" + i.price).join("\n");
-
-    let msg =
-`🍔 FOODY ORDER
-
-Name: ${name}
-Mobile: ${mobile}
-Address: ${address}
-Payment: ${payment}
-Location: ${location}
-
-Items:
-${itemsText}
-
-Total: ₹${total}
-Delivery: ₹${DELIVERY_CHARGE}
-Grand: ₹${grand}`;
-
-    window.open("https://wa.me/8449196052?text=" + encodeURIComponent(msg), "_blank");
 }
 
+function placeOrder(){
+
+let name =
+document.getElementById("name").value.trim();
+
+let phone =
+document.getElementById("phone").value.trim();
+
+let address =
+document.getElementById("address").value.trim();
+
+if(name===""){
+
+alert("Please enter your name");
+return;
+
+}
+
+if(phone===""){
+
+alert("Please enter mobile number");
+return;
+
+}
+
+if(address===""){
+
+alert("Please enter address");
+return;
+
+}
+
+if(gpsLocation===""){
+
+alert(
+"GPS Location is compulsory before ordering."
+);
+
+return;
+
+}
+
+if(cart.length===0){
+
+alert(
+"Your cart is empty."
+);
+
+return;
+
+}
+
+let orderText =
+"🍔 FOODY HUB ORDER DETAIL\n\n";
+
+orderText +=
+"👤 Name: " + name + "\n";
+
+orderText +=
+"📞 Phone: " + phone + "\n";
+
+orderText +=
+"🏠 Address: " + address + "\n";
+
+orderText +=
+"📍 GPS: " + gpsLocation + "\n\n";
+
+orderText +=
+"🛒 ITEMS:\n";
+
+let total = 0;
+
+cart.forEach(item=>{
+
+orderText +=
+item.name +
+" x " +
+item.qty +
+" = ₹" +
+(item.qty * item.price)
++
+"\n";
+
+total +=
+item.qty * item.price;
+
+});
+
+orderText +=
+"\n💰 Total = ₹" +
+total;
+
+let whatsappURL =
+"https://wa.me/918449196052?text=" +
+encodeURIComponent(orderText);
+
+window.open(
+whatsappURL,
+"_blank"
+);
+
+alert(
+"Order sent successfully!"
+);
+
+cart = [];
+
+renderCart();
+
+}
+
+renderCart();
 
 </script>
 
