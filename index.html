@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FOODY PREMIUM v4.0</title>
+<title>FOODY PREMIUM v5.0</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -15,13 +15,19 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:'Poppins',sans-serif;
-scroll-behavior:smooth;
 }
 
 body{
 background:#f5f5f5;
 }
 
+.page{
+display:none !important;
+}
+
+.page.active{
+display:block !important;
+}
 nav{
 position:fixed;
 top:0;
@@ -55,21 +61,20 @@ font-weight:600;
 
 .hero{
 height:100vh;
-background:
-linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
-url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');
-background-size:cover;
-background-position:center;
+background:#222;
 display:flex;
 justify-content:center;
 align-items:center;
 text-align:center;
 color:white;
 padding:20px;
+
 }
 
 .hero h1{
 font-size:70px;
+line-height:1.2;
+padding-top:60px;
 }
 
 .hero span{
@@ -116,6 +121,7 @@ display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:15px;
 }
+
 .food{
 background:white;
 border-radius:20px;
@@ -187,10 +193,12 @@ nav ul{
 gap:10px;
 font-size:14px;
 }
+
 }
 
 </style>
 </head>
+
 <body>
 
 <nav>
@@ -200,15 +208,38 @@ FOODY
 </div>
 
 <ul>
-<li><a href="#home">Home</a></li>
-<li><a href="#customer">Customer</a></li>
-<li><a href="#menu">Menu</a></li>
-<li><a href="#cart">Cart</a></li>
+
+<li>
+<a href="#" onclick="showPage('home')">
+Home
+</a>
+</li>
+
+<li>
+<a href="#" onclick="showPage('customer')">
+Customer
+</a>
+</li>
+
+<li>
+<a href="#" onclick="showPage('menu')">
+Menu
+</a>
+</li>
+
+<li>
+<a href="#" onclick="showPage('cart')">
+Cart
+</a>
+</li>
+
 </ul>
 
 </nav>
 
-<section class="hero" id="home">
+<!-- HOME PAGE -->
+
+<section class="hero page active" id="home">
 
 <div>
 
@@ -222,16 +253,21 @@ Fast Delivery • Fresh Food • Best Taste
 
 <br>
 
-<button class="btn"
-onclick="document.getElementById('customer').scrollIntoView()">
+<button
+class="btn"
+onclick="showPage('customer')">
+
 Order Now
+
 </button>
 
 </div>
 
 </section>
 
-<section id="customer">
+<!-- CUSTOMER PAGE -->
+
+<section class="page" id="customer">
 
 <h2 class="title">
 Customer Details
@@ -257,30 +293,53 @@ placeholder="Delivery Address"
 required>
 </textarea>
 
-<button class="btn"
+<button
+class="btn"
 onclick="getLocation()">
+
 📍 Get GPS Location
+
 </button>
 
 <br><br>
 
 <p id="locationText">
-Location Not Selected
-</p>
-<div id="mapContainer" style="margin-top:20px;"></div>
 
-<a id="mapLink"
+Location Not Selected
+
+</p>
+
+<div
+id="mapContainer"
+style="margin-top:20px;">
+</div>
+
+<a
+id="mapLink"
 target="_blank"
 class="btn"
 style="display:none;margin-top:10px;">
+
 Open in Google Maps
+
 </a>
+
+<br><br>
+
+<button
+class="btn"
+onclick="showPage('menu')">
+
+Next → Menu
+
+</button>
 
 </div>
 
 </section>
+<!-- MENU PAGE -->
 
-<section id="menu">
+<section class="page" id="menu">
 
 <h2 class="title">
 Our Menu
@@ -294,7 +353,8 @@ onkeyup="searchFood()">
 
 <br><br>
 
-<select id="categoryFilter"
+<select
+id="categoryFilter"
 onchange="filterCategory()">
 
 <option value="all">
@@ -318,7 +378,8 @@ Milk
 <br><br>
 
 <div class="menu-grid" id="menuGrid">
-    <!-- BURGER -->
+
+<!-- BURGER -->
 
 <div class="food fastfood">
 
@@ -328,12 +389,16 @@ Milk
 
 <h3>Burger ₹99</h3>
 
-<button class="add-btn"
+<button
+class="add-btn"
 onclick="addItem('Burger',99)">
+
 Add To Cart
+
 </button>
 
 </div>
+
 </div>
 
 <!-- PIZZA -->
@@ -346,33 +411,41 @@ Add To Cart
 
 <h3>Pizza ₹199</h3>
 
-<button class="add-btn"
+<button
+class="add-btn"
 onclick="addItem('Pizza',199)">
+
 Add To Cart
+
 </button>
 
 </div>
+
 </div>
 
 <!-- MOMOS -->
 
 <div class="food fastfood">
 
-<img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec">
+<img src="images/momos.jpg">
 
 <div class="food-content">
 
 <h3>Momos ₹80</h3>
 
-<button class="add-btn"
+<button
+class="add-btn"
 onclick="addItem('Momos',80)">
+
 Add To Cart
+
 </button>
 
 </div>
+
 </div>
 
-<!-- COLD DRINK -->
+<!-- COCA COLA -->
 
 <div class="food drinks">
 
@@ -382,12 +455,16 @@ Add To Cart
 
 <h3>Coca Cola ₹20</h3>
 
-<button class="add-btn"
+<button
+class="add-btn"
 onclick="addItem('Coca Cola',20)">
+
 Add To Cart
+
 </button>
 
 </div>
+
 </div>
 
 <!-- PEPSI -->
@@ -400,12 +477,16 @@ Add To Cart
 
 <h3>Pepsi ₹20</h3>
 
-<button class="add-btn"
+<button
+class="add-btn"
 onclick="addItem('Pepsi',20)">
+
 Add To Cart
+
 </button>
 
 </div>
+
 </div>
 
 <!-- SPRITE -->
@@ -418,15 +499,19 @@ Add To Cart
 
 <h3>Sprite ₹20</h3>
 
-<button class="add-btn"
+<button
+class="add-btn"
 onclick="addItem('Sprite',20)">
+
 Add To Cart
+
 </button>
 
 </div>
+
 </div>
 
-<!-- MILK -->
+<!-- MILK 1L -->
 
 <div class="food milk">
 
@@ -436,12 +521,16 @@ Add To Cart
 
 <h3>Milk 1 Litre ₹55</h3>
 
-<button class="add-btn"
+<button
+class="add-btn"
 onclick="addItem('Milk 1L',55)">
+
 Add To Cart
+
 </button>
 
 </div>
+
 </div>
 
 <!-- MILK 2L -->
@@ -454,22 +543,40 @@ Add To Cart
 
 <h3>Milk 2 Litre ₹110</h3>
 
-<button class="add-btn"
+<button
+class="add-btn"
 onclick="addItem('Milk 2L',110)">
+
 Add To Cart
+
 </button>
 
 </div>
+
 </div>
 
 </div>
+
+<br><br>
+
+<button
+class="btn"
+onclick="showPage('cart')">
+
+🛒 View Cart
+
+</button>
 
 </section>
 
-<section id="cart">
+<!-- CART PAGE -->
+
+<section class="page" id="cart">
 
 <h2 class="title">
+
 Your Cart
+
 </h2>
 
 <div id="cartItems">
@@ -486,35 +593,72 @@ Total ₹
 
 <br>
 
-<button class="btn"
+<button
+class="btn"
 onclick="placeOrder()">
 
 Place Order
 
 </button>
 
+<br><br>
+
+<button
+class="btn"
+onclick="showPage('menu')">
+
+← Back To Menu
+
+</button>
+
 </section>
+
 <footer>
 
-<h2>FOODY PREMIUM v4.0</h2>
+<h2>
+FOODY PREMIUM v5.0
+</h2>
 
 <br>
 
-<p>📞 8449196053 | 8010559951</p>
+<p>
+📞 8449196053 | 8010559951
+</p>
 
-<p>✉️ rishabhtenguriya52@gmail.com</p>
+<p>
+✉️ rishabhtenguriya52@gmail.com
+</p>
 
 <br>
 
-<p>© 2026 Foody Premium. All Rights Reserved.</p>
+<p>
+© 2026 Foody Premium. All Rights Reserved.
+</p>
 
 </footer>
-
 <script>
 
 let cart = [];
 
 let gpsLocation = "";
+
+/* PAGE SYSTEM */
+
+function showPage(pageId){
+
+document.querySelectorAll('.page').forEach(page=>{
+
+page.classList.remove('active');
+
+});
+
+document.getElementById(pageId).classList.add('active');
+
+window.scrollTo(0,0);
+
+}
+
+/* ADD ITEM */
 
 function addItem(name,price){
 
@@ -535,7 +679,10 @@ qty:1
 }
 
 renderCart();
+
 }
+
+/* RENDER CART */
 
 function renderCart(){
 
@@ -599,6 +746,8 @@ document.getElementById("total").innerText = total;
 
 }
 
+/* INCREASE */
+
 function increaseQty(name){
 
 let item = cart.find(x => x.name === name);
@@ -608,6 +757,8 @@ item.qty++;
 renderCart();
 
 }
+
+/* DECREASE */
 
 function decreaseQty(name){
 
@@ -625,6 +776,8 @@ renderCart();
 
 }
 
+/* REMOVE */
+
 function removeItem(name){
 
 cart = cart.filter(x => x.name !== name);
@@ -632,6 +785,8 @@ cart = cart.filter(x => x.name !== name);
 renderCart();
 
 }
+
+/* GPS LOCATION */
 
 function getLocation(){
 
@@ -697,6 +852,9 @@ alert(
 }
 
 }
+
+/* SEARCH */
+
 function searchFood(){
 
 let input =
@@ -721,6 +879,8 @@ text.includes(input)
 
 }
 
+/* CATEGORY FILTER */
+
 function filterCategory(){
 
 let category =
@@ -733,9 +893,7 @@ document.querySelectorAll(".food");
 
 foods.forEach(food=>{
 
-if(
-category==="all"
-){
+if(category==="all"){
 
 food.style.display="block";
 
@@ -751,6 +909,8 @@ food.classList.contains(category)
 });
 
 }
+
+/* PLACE ORDER */
 
 function placeOrder(){
 
@@ -861,9 +1021,14 @@ cart = [];
 
 renderCart();
 
+showPage('home');
+
 }
 
+/* START */
+
 renderCart();
+showPage('home');
 
 </script>
 
