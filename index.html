@@ -60,16 +60,22 @@ font-weight:600;
 }
 
 .hero{
-height:100vh;
-background:#222;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-color:white;
-padding:20px;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
 
+    background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=80');
+
+    background-size:cover;
+    background-position:center;
 }
+
+
 
 .hero h1{
 font-size:70px;
@@ -118,25 +124,25 @@ border-radius:10px;
 
 .menu-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
 gap:15px;
 }
 
 .food{
 background:white;
-border-radius:20px;
+border-radius:10px;
 overflow:hidden;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
+box-shadow:0 3px 12px rgba(0,0,0,.1);
 }
 
 .food img{
-width:100%;
-height:150px;
+width:60%;
+height:80px;
 object-fit:cover;
 }
 
 .food-content{
-padding:20px;
+padding:10px;
 text-align:center;
 }
 
@@ -144,9 +150,13 @@ text-align:center;
 background:#ff9800;
 color:white;
 border:none;
-padding:10px 20px;
-border-radius:25px;
+padding:10px 10px;
+border-radius:20px;
 cursor:pointer;
+}
+.added{
+background:#28a745 !important;
+color:white;
 }
 
 .cart-item{
@@ -244,7 +254,7 @@ Cart
 <div>
 
 <h1>
-Welcome To <span>FOODY</span>
+Welcome To <span>FOODY HUB</span>
 </h1>
 
 <p>
@@ -328,7 +338,7 @@ Open in Google Maps
 
 <button
 class="btn"
-onclick="showPage('menu')">
+onclick="goToMenu()">
 
 Next → Menu
 
@@ -391,7 +401,7 @@ Milk
 
 <button
 class="add-btn"
-onclick="addItem('Burger',99)">
+onclick="addItem('Burger',99,this)">
 
 Add To Cart
 
@@ -413,7 +423,7 @@ Add To Cart
 
 <button
 class="add-btn"
-onclick="addItem('Pizza',199)">
+onclick="addItem('Pizza',199,this)">
 
 Add To Cart
 
@@ -422,12 +432,32 @@ Add To Cart
 </div>
 
 </div>
+<!-- Birthday cake -->
 
+<div class="food fastfood">
+
+ <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=600"
+         alt="Noodles">
+<div class="food-content">
+
+<h3>Noodle ₹40</h3>
+
+<button
+class="add-btn"
+onclick="addItem('Noodles',40,this)">
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
 <!-- MOMOS -->
 
 <div class="food fastfood">
 
-<img src="images/momos.jpg">
+<img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=600">
 
 <div class="food-content">
 
@@ -435,7 +465,7 @@ Add To Cart
 
 <button
 class="add-btn"
-onclick="addItem('Momos',80)">
+onclick="addItem('Momos',80,this)">
 
 Add To Cart
 
@@ -457,7 +487,7 @@ Add To Cart
 
 <button
 class="add-btn"
-onclick="addItem('Coca Cola',20)">
+onclick="addItem('Coca Cola',20,this)">
 
 Add To Cart
 
@@ -479,13 +509,40 @@ Add To Cart
 
 <button
 class="add-btn"
-onclick="addItem('Pepsi',20)">
+onclick="addItem('Pepsi',20,this)">
 
 Add To Cart
 
 </button>
 
 </div>
+
+</div>
+<div class="food drinks">
+
+    <img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e">
+
+    <div class="food-content">
+
+        <h3>🥤 Cold Drinks</h3>
+
+        <select id="coldDrinkSelect">
+            <option value="20|Coca Cola">Coca Cola ₹20</option>
+            <option value="20|Pepsi">Pepsi ₹20</option>
+            <option value="85|Sprite">Sprite ₹85</option>
+        </select>
+
+        <br><br>
+
+        <button
+        class="add-btn"
+        onclick="addColdDrink(this)">
+
+        Add To Cart
+
+        </button>
+
+    </div>
 
 </div>
 
@@ -497,17 +554,47 @@ Add To Cart
 
 <div class="food-content">
 
-<h3>Sprite ₹20</h3>
+<h3>Sprite ₹85</h3>
 
 <button
 class="add-btn"
-onclick="addItem('Sprite',20)">
+onclick="addItem('Sprite',85,this)">
 
 Add To Cart
 
 </button>
 
 </div>
+
+</div>
+<div class="food fastfood">
+
+    <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600"
+         alt="Birthday Cake">
+
+    <div class="food-content">
+
+        <h3>🎂 Birthday Cake ₹499</h3>
+
+        <select id="cakeFlavor">
+            <option value="Chocolate">🍫 Chocolate</option>
+            <option value="Black Forest">🎂 Black Forest</option>
+            <option value="Butterscotch">🧈 Butterscotch</option>
+            <option value="Vanilla">🍦 Vanilla</option>
+            <option value="Strawberry">🍓 Strawberry</option>
+        </select>
+
+        <br><br>
+
+        <button
+        class="add-btn"
+        onclick="addBirthdayCake(this)">
+
+        Add To Cart
+
+        </button>
+
+    </div>
 
 </div>
 
@@ -523,7 +610,7 @@ Add To Cart
 
 <button
 class="add-btn"
-onclick="addItem('Milk 1L',55)">
+onclick="addItem('Milk 1L',55,this)">
 
 Add To Cart
 
@@ -533,27 +620,7 @@ Add To Cart
 
 </div>
 
-<!-- MILK 2L -->
 
-<div class="food milk">
-
-<img src="https://images.unsplash.com/photo-1563636619-e9143da7973b">
-
-<div class="food-content">
-
-<h3>Milk 2 Litre ₹110</h3>
-
-<button
-class="add-btn"
-onclick="addItem('Milk 2L',110)">
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
 
 </div>
 
@@ -582,13 +649,19 @@ Your Cart
 <div id="cartItems">
 </div>
 
+<div style="font-size:22px;margin-top:15px;">
+🍔 Food Total ₹
+<span id="foodTotal">0</span>
+</div>
+
+<div style="font-size:22px;margin-top:10px;">
+🚚 Delivery Charge ₹
+<span id="deliveryCharge">20</span>
+</div>
+
 <div class="total">
-
-Total ₹
-<span id="total">
-0
-</span>
-
+💰 Grand Total ₹
+<span id="total">0</span>
 </div>
 
 <br>
@@ -622,7 +695,7 @@ FOODY PREMIUM v5.0
 <br>
 
 <p>
-📞 8449196053 | 8010559951
+📞 8449196052 | 8010559951
 </p>
 
 <p>
@@ -660,7 +733,7 @@ window.scrollTo(0,0);
 
 /* ADD ITEM */
 
-function addItem(name,price){
+function addItem(name,price,btn=null){
 
 let item = cart.find(x => x.name === name);
 
@@ -678,6 +751,11 @@ qty:1
 
 }
 
+if(btn){
+btn.classList.add("added");
+btn.innerHTML="✓ Added";
+}
+
 renderCart();
 
 }
@@ -687,7 +765,6 @@ renderCart();
 function renderCart(){
 
 let html = "";
-
 let total = 0;
 
 cart.forEach(item=>{
@@ -695,88 +772,73 @@ cart.forEach(item=>{
 total += item.price * item.qty;
 
 html += `
-
 <div class="cart-item">
 
 <div>
-
 <b>${item.name}</b>
-
 <br>
-
 ₹${item.price}
-
 </div>
 
 <div>
-
-<button
-class="qty-btn"
-onclick="decreaseQty('${item.name}')">
--
-</button>
+<button class="qty-btn" onclick="decreaseQty('${item.name}')">-</button>
 
 ${item.qty}
 
-<button
-class="qty-btn"
-onclick="increaseQty('${item.name}')">
-+
-</button>
+<button class="qty-btn" onclick="increaseQty('${item.name}')">+</button>
 
-<button
-class="qty-btn"
-onclick="removeItem('${item.name}')">
-
+<button class="qty-btn" onclick="removeItem('${item.name}')">
 Remove
-
 </button>
 
 </div>
 
 </div>
-
 `;
 
 });
 
 document.getElementById("cartItems").innerHTML = html;
 
-document.getElementById("total").innerText = total;
+let deliveryCharge = cart.length > 0 ? 20 : 0;
+
+document.getElementById("foodTotal").innerText = total;
+
+document.getElementById("deliveryCharge").innerText = deliveryCharge;
+
+document.getElementById("total").innerText =
+total + deliveryCharge;
 
 }
-
-/* INCREASE */
-
 function increaseQty(name){
 
 let item = cart.find(x => x.name === name);
 
+if(item){
 item.qty++;
+}
 
 renderCart();
 
 }
-
-/* DECREASE */
 
 function decreaseQty(name){
 
 let item = cart.find(x => x.name === name);
 
+if(item){
+
 item.qty--;
 
 if(item.qty <= 0){
-
 cart = cart.filter(x => x.name !== name);
+}
 
 }
 
 renderCart();
 
 }
-
-/* REMOVE */
 
 function removeItem(name){
 
@@ -954,13 +1016,17 @@ return;
 
 }
 
-if(cart.length===0){
+let foodTotal = 0;
 
-alert(
-"Your cart is empty."
-);
+cart.forEach(item=>{
+    foodTotal += item.price * item.qty;
+});
 
-return;
+if(foodTotal < 120){
+
+    alert("⚠️ Minimum order amount is ₹120");
+
+    return;
 
 }
 
@@ -1000,8 +1066,14 @@ item.qty * item.price;
 
 });
 
+let deliveryCharge = cart.length > 0 ? 20 : 0;
+
+total += deliveryCharge;
+
+orderText += "\n🚚 Delivery Charge = ₹" + deliveryCharge;
+
 orderText +=
-"\n💰 Total = ₹" +
+"\n💰 Grand Total = ₹" +
 total;
 
 let whatsappURL =
@@ -1025,11 +1097,118 @@ showPage('home');
 
 }
 
-/* START */
 
-renderCart();
-showPage('home');
 
+    function addBirthdayCake(btn) {
+
+    let flavor =
+    document.getElementById("cakeFlavor").value;
+
+    let birthdayName =
+    prompt("Birthday Person Name:");
+
+    if (!birthdayName) return;
+
+    let birthdayAge =
+    prompt("Birthday Age:");
+
+    if (!birthdayAge) return;
+
+    let itemName =
+    "🎂 " + flavor +
+    " Cake (" +
+    birthdayName +
+    ", Age " +
+    birthdayAge +
+    ")";
+
+    addItem(itemName, 499);
+
+    btn.classList.add("added");
+    btn.innerHTML = "✓ Added";
+}
+
+function goToMenu(){
+
+    let name =
+    document.getElementById("name").value.trim();
+
+    let phone =
+    document.getElementById("phone").value.trim();
+
+    let address =
+    document.getElementById("address").value.trim();
+
+    if(name === ""){
+        alert("Please enter your name");
+        return;
+    }
+
+    if(phone === ""){
+        alert("Please enter mobile number");
+        return;
+    }
+
+    if(address === ""){
+        alert("Please enter address");
+        return;
+    }
+
+    if(gpsLocation === ""){
+        alert("Please capture GPS location first");
+        return;
+    }
+
+    showPage('menu');
+}
+function addColdDrink(btn){
+
+    let data =
+    document.getElementById("coldDrinkSelect").value;
+
+    let parts = data.split("|");
+
+    let price = parseInt(parts[0]);
+
+    let name = parts[1];
+
+    addItem(name, price);
+
+    btn.classList.add("added");
+    btn.innerHTML = "✓ Added";
+}
+function addChocolate(){
+
+    let data =
+    document.getElementById("chocolateSelect").value;
+
+    let qty =
+    parseInt(document.getElementById("chocolateQty").value);
+
+    let parts = data.split("|");
+
+    let price = parseInt(parts[0]);
+
+    let name = parts[1];
+
+    let item = cart.find(x => x.name === name);
+
+    if(item){
+
+        item.qty += qty;
+
+    }else{
+
+        cart.push({
+            name: name,
+            price: price,
+            qty: qty
+        });
+
+    }
+
+    renderCart();
+}
 </script>
 
 </body>
