@@ -127,7 +127,30 @@ display:grid;
 grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
 gap:15px;
 }
+#menu{
+    background:
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+}
+.food{
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
 
+.food:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.food-content h3{
+    color:#333;
+    font-weight:700;
+}
 .food{
 background:white;
 border-radius:10px;
@@ -205,7 +228,54 @@ font-size:14px;
 }
 
 }
+#customer{
+    background: 
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url('https://images.unsplash.com/photo-1550547660-d9450f859349');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+.customer-card{
+    max-width:500px;
+    margin:auto;
+    border-radius:20px;
+    padding:30px;
+    background:rgba(255,255,255,0.95);
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    backdrop-filter:blur(10px);
+}
 
+.customer-card input,
+.customer-card textarea{
+    border:none;
+    border-bottom:2px solid #ff9800;
+    border-radius:0;
+    background:transparent;
+    font-size:16px;
+    padding:12px 5px;
+    outline:none;
+}
+
+.customer-card input:focus,
+.customer-card textarea:focus{
+    border-bottom:2px solid #28a745;
+}
+
+.customer-card textarea{
+    min-height:80px;
+    resize:none;
+}
+.logo {
+    font-size: 48px;
+    font-weight: 800;
+    text-align: center;
+    background: linear-gradient(90deg, #ff512f, #dd2476);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
 </style>
 </head>
 
@@ -214,7 +284,7 @@ font-size:14px;
 <nav>
 
 <div class="logo">
-FOODY
+FOODY HUB 
 </div>
 
 <ul>
@@ -283,7 +353,7 @@ Order Now
 Customer Details
 </h2>
 
-<div class="card">
+<div class="card customer-card">
 
 <input
 type="text"
@@ -597,7 +667,34 @@ Add To Cart
     </div>
 
 </div>
+<!-- CHOCOLATE -->
 
+<div class="food milk">
+
+<img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600" alt="Chocolate">
+
+<div class="food-content">
+
+<h3>🍫 Chocolate</h3>
+
+<select id="chocolateSelect">
+<option value="25|Dairy Milk">Dairy Milk ₹25</option>
+<option value="30|KitKat">KitKat ₹30</option>
+<option value="35|5 Star">5 Star ₹35</option>
+<option value="40|Snickers">Snickers ₹40</option>
+</select>
+
+<br><br>
+
+<input type="number" id="chocolateQty" value="1" min="1" style="width:80px; padding:5px;">
+
+<br><br>
+
+<button class="add-btn" onclick="addChocolate(this)">Add To Cart</button>
+
+</div>
+
+</div>
 <!-- MILK 1L -->
 
 <div class="food milk">
@@ -663,7 +760,27 @@ Your Cart
 💰 Grand Total ₹
 <span id="total">0</span>
 </div>
+<div class="card">
 
+<h3>💳 Payment Method</h3>
+
+<select id="payment">
+    <option value="Cash On Delivery">Cash On Delivery</option>
+    <option value=" Online"> Online Payment</option>
+</select>
+<div style="text-align:center;margin-top:15px;">
+
+    <h3>💳 Scan & Pay</h3>
+
+   <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi%3A%2F%2Fpay%3Fpa%3D8449196052%40nyes%26pn%3DFOODY%20HUB%26cu%3DINR"
+style="width:180px;border:2px solid #ff0040;border-radius:10px;">
+
+</div>
+<br><br>
+
+
+
+</div>
 <br>
 
 <button
@@ -673,6 +790,7 @@ onclick="placeOrder()">
 Place Order
 
 </button>
+
 
 <br><br>
 
@@ -710,7 +828,7 @@ FOODY PREMIUM v5.0
 
 </footer>
 <script>
-
+let upiID = "8449196052@nyes";
 let cart = [];
 
 let gpsLocation = "";
@@ -974,129 +1092,48 @@ food.classList.contains(category)
 
 /* PLACE ORDER */
 
+
+
 function placeOrder(){
+let name = document.getElementById("name").value.trim();
+let phone = document.getElementById("phone").value.trim();
+let address = document.getElementById("address").value.trim();
+let payment = document.getElementById("payment").value;
 
-let name =
-document.getElementById("name").value.trim();
+if(name===""){ alert("Please enter your name"); return; }
+if(phone===""){ alert("Please enter mobile number"); return; }
+if(address===""){ alert("Please enter address"); return; }
+if(gpsLocation===""){ alert("GPS Location is compulsory before ordering."); return; }
 
-let phone =
-document.getElementById("phone").value.trim();
-
-let address =
-document.getElementById("address").value.trim();
-
-if(name===""){
-
-alert("Please enter your name");
-return;
-
-}
-
-if(phone===""){
-
-alert("Please enter mobile number");
-return;
-
-}
-
-if(address===""){
-
-alert("Please enter address");
-return;
-
-}
-
-if(gpsLocation===""){
-
-alert(
-"GPS Location is compulsory before ordering."
-);
-
-return;
-
-}
-
-let foodTotal = 0;
-
-cart.forEach(item=>{
-    foodTotal += item.price * item.qty;
-});
-
-if(foodTotal < 120){
-
-    alert("⚠️ Minimum order amount is ₹120");
-
-    return;
-
-}
-
-let orderText =
-"🍔 FOODY HUB ORDER DETAIL\n\n";
-
-orderText +=
-"👤 Name: " + name + "\n";
-
-orderText +=
-"📞 Phone: " + phone + "\n";
-
-orderText +=
-"🏠 Address: " + address + "\n";
-
-orderText +=
-"📍 GPS: " + gpsLocation + "\n\n";
-
-orderText +=
-"🛒 ITEMS:\n";
+let orderText = "🍔 FOODY HUB ORDER DETAIL\n";
+orderText += "👤 Name: " + name + "\n";
+orderText += "📞 Phone: " + phone + "\n";
+orderText += "🏠 Address: " + address + "\n";
+orderText += "📍 GPS: " + gpsLocation + "\n\n";
+orderText += "🛒 ITEMS:\n";
 
 let total = 0;
-
 cart.forEach(item=>{
-
-orderText +=
-item.name +
-" x " +
-item.qty +
-" = ₹" +
-(item.qty * item.price)
-+
-"\n";
-
-total +=
-item.qty * item.price;
-
+orderText += item.name + " x " + item.qty + " = ₹" + (item.qty * item.price) + "\n";
+total += item.qty * item.price;
 });
 
 let deliveryCharge = cart.length > 0 ? 20 : 0;
-
 total += deliveryCharge;
 
 orderText += "\n🚚 Delivery Charge = ₹" + deliveryCharge;
+orderText += "\n💰 Grand Total = ₹" + total;
+orderText += "\n💳 Payment: " + payment;
+orderText += "\n💳 UPI ID: " + upiID + "\n";
 
-orderText +=
-"\n💰 Grand Total = ₹" +
-total;
+let whatsappURL = "https://wa.me/918449196052?text=" + encodeURIComponent(orderText);
+window.open(whatsappURL, "_blank");
 
-let whatsappURL =
-"https://wa.me/918449196052?text=" +
-encodeURIComponent(orderText);
-
-window.open(
-whatsappURL,
-"_blank"
-);
-
-alert(
-"Order sent successfully!"
-);
-
+alert("Order sent successfully!");
 cart = [];
-
 renderCart();
-
 showPage('home');
-
 }
-
 
 
     function addBirthdayCake(btn) {
@@ -1177,7 +1214,7 @@ function addColdDrink(btn){
     btn.classList.add("added");
     btn.innerHTML = "✓ Added";
 }
-function addChocolate(){
+function addChocolate(btn){
 
     let data =
     document.getElementById("chocolateSelect").value;
@@ -1209,6 +1246,17 @@ function addChocolate(){
 
     renderCart();
 }
+function payNow(){
+
+let total = document.getElementById("total").innerText;
+
+// UPI payment link
+let upiLink =
+`upi://pay?pa=${upiID}&pn=FOODY%20HUB&am=${total}&cu=INR`;
+
+window.location.href = upiLink;
+}
+
 </script>
 
 </body>
