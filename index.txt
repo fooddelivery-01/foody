@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOODY PREMIUM v5.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+<div class="logo">
+FOODY HUB
+<br>
+<span style="font-size:12px; color:white;">
+🕘 9:00 AM - 9:00 PM
+</span>
+</div>
+<ul>
+<li><a href="#" onclick="showPage('home')">Home</a></li>
+<li><a href="#" onclick="showPage('customer')">Customer</a></li>
+<li><a href="#" onclick="showPage('menu')">Menu</a></li>
+<li><a href="#" onclick="showPage('cart')">Cart</a></li>
+</ul>
+</nav>
+
+<!-- HOME PAGE -->
+<section class="hero page active" id="home">
+<div>
+<h1>Welcome To <span>FOODY HUB</span></h1>
+<p>Fast Delivery • Fresh Food • Best Taste</p>
+<br>
+<button class="btn" onclick="showPage('customer')">Order Now</button>
+</div>
+</section>
+
+<!-- CUSTOMER PAGE -->
+<section class="page" id="customer">
+<h2 class="title">Customer Details</h2>
+<div class="card customer-card">
+<input type="text" id="name" placeholder="Full Name" required>
+<input type="tel" id="phone" placeholder="Mobile Number" required>
+<textarea id="address" placeholder="Delivery Address" required></textarea>
+<button class="btn" onclick="getLocation()">📍 Get GPS Location</button>
+<br><br>
+<p id="locationText">Location Not Selected</p>
+<div id="mapContainer" style="margin-top:20px;"></div>
+<a id="mapLink" target="_blank" class="btn" style="display:none;margin-top:10px;">Open in Google Maps</a>
+<br><br>
+<button class="btn" onclick="goToMenu()">Next → Menu</button>
+</div>
+</section>
+
+<!-- MENU PAGE -->
+<section class="page" id="menu">
+<h2 class="title">Our Menu</h2>
+<input type="text" id="search" placeholder="Search Food..." onkeyup="searchFood()">
+<br><br>
+<select id="categoryFilter" onchange="filterCategory()">
+<option value="all">All Categories</option>
+<option value="fastfood">Fast Food</option>
+<option value="drinks">Cold Drinks</option>
+<option value="milk">Milk</option>
+</select>
+<br><br>
+<div class="menu-grid" id="menuGrid">
+<!-- BURGER -->
+<div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd">
+<div class="food-content">
+<h3>Burger ₹99</h3>
+<button class="add-btn" onclick="addItem('Burger',99,this)">Add To Cart</button>
+</div>
+</div>
+
+<div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591">
+<div class="food-content">
+<h3>🍕 Pizza</h3>
+<select id="pizzaSelect">
+    <option value="199|Regular Pizza">Regular Pizza ₹199</option>
+    <option value="299|Medium Pizza">Medium Pizza ₹299</option>
+    <option value="399|Large Pizza">Large Pizza ₹399</option>
+</select>
+<input type="number" id="pizzaQty" value="1" min="1">
+<button class="add-btn" onclick="addPizza(this)">Add To Cart</button>
+</div>
+</div>
+
+<!-- Birthday cake -->
+<div class="food fastfood">
+ <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=600" alt="Noodles">
+<div class="food-content">
+<h3>Noodle ₹40</h3>
+<button class="add-btn" onclick="addItem('Noodles',40,this)">Add To Cart</button>
+</div>
+</div>
+
+<!-- MOMOS -->
+<div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=600">
+<div class="food-content">
+<h3>Momos ₹80</h3>
+<button class="add-btn" onclick="addItem('Momos',80,this)">Add To Cart</button>
+</div>
+</div>
+
+<!-- COCA COLA -->
+<div class="food drinks">
+<img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e">
+<div class="food-content">
+<h3>Coca Cola ₹20</h3>
+<button class="add-btn" onclick="addItem('Coca Cola',20,this)">Add To Cart</button>
+</div>
+</div>
+
+<!-- PEPSI -->
+<div class="food drinks">
+<img src="https://images.unsplash.com/photo-1581006852262-e4307cf6283a">
+<div class="food-content">
+<h3>Pepsi ₹20</h3>
+<button class="add-btn" onclick="addItem('Pepsi',20,this)">Add To Cart</button>
+</div>
+</div>
+
+<div class="food drinks">
+    <img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e">
+    <div class="food-content">
+        <h3>🥤 Cold Drinks</h3>
+        <select id="coldDrinkSelect">
+            <option value="20|Coca Cola">Coca Cola ₹20</option>
+            <option value="20|Pepsi">Pepsi ₹20</option>
+            <option value="85|Sprite">Sprite ₹85</option>
+        </select>
+        <br><br>
+        <button class="add-btn" onclick="addColdDrink(this)">Add To Cart</button>
+    </div>
+</div>
+
+<!-- SPRITE -->
+<div class="food drinks">
+<img src="https://images.unsplash.com/photo-1624517452488-04869289c4ca">
+<div class="food-content">
+<h3>Sprite ₹85</h3>
+<button class="add-btn" onclick="addItem('Sprite',85,this)">Add To Cart</button>
+</div>
+</div>
+
+<div class="food fastfood">
+    <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600" alt="Birthday Cake">
+    <div class="food-content">
+        <h3>🎂 Birthday Cake ₹499</h3>
+        <select id="cakeFlavor">
+            <option value="Chocolate">🍫 Chocolate</option>
+            <option value="Black Forest">🎂 Black Forest</option>
+            <option value="Butterscotch">🧈 Butterscotch</option>
+            <option value="Vanilla">🍦 Vanilla</option>
+            <option value="Strawberry">🍓 Strawberry</option>
+        </select>
+        <br><br>
+        <button class="add-btn" onclick="addBirthdayCake(this)">Add To Cart</button>
+    </div>
+</div>
+
+<!-- CHOCOLATE -->
+<div class="food milk">
+<img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600" alt="Chocolate">
+<div class="food-content">
+<h3>🍫 Chocolate</h3>
+<select id="chocolateSelect">
+<option value="25|Dairy Milk">Dairy Milk ₹25</option>
+<option value="30|KitKat">KitKat ₹30</option>
+<option value="35|5 Star">5 Star ₹35</option>
+<option value="40|Snickers">Snickers ₹40</option>
+</select>
+<br><br>
+<input type="number" id="chocolateQty" value="1" min="1" style="width:80px; padding:5px;">
+<br><br>
+<button class="add-btn" onclick="addChocolate(this)">Add To Cart</button>
+</div>
+</div>
+
+<!-- MILK 1L -->
+<div class="food milk">
+<img src="https://images.unsplash.com/photo-1550583724-b2692b85b150">
+<div class="food-content">
+<h3>Milk 1 Litre ₹55</h3>
+<button class="add-btn" onclick="addItem('Milk 1L',55,this)">Add To Cart</button>
+</div>
+</div>
+</div>
+<br><br>
+<button class="btn" onclick="showPage('cart')">🛒 View Cart</button>
+</section>
+
+<!-- CART PAGE -->
+<section class="page" id="cart">
+<h2 class="title">Your Cart</h2>
+<div id="cartItems"></div>
+<div style="font-size:22px;margin-top:15px;">🍔 Food Total ₹<span id="foodTotal">0</span></div>
+<div style="font-size:22px;margin-top:10px;">🚚 Delivery Charge ₹<span id="deliveryCharge">20</span></div>
+<div class="total">💰 Grand Total ₹<span id="total">0</span></div>
+<div class="card">
+<h3>💳 Payment Method</h3>
+<select id="payment">
+    <option value="Cash On Delivery">Cash On Delivery</option>
+    <option value=" Online"> Online Payment</option>
+</select>
+<div style="text-align:center;margin-top:15px;">
+    <h3>💳 Scan & Pay</h3>
+   <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi%3A%2F%2Fpay%3Fpa%3D8449196052%40nyes%26pn%3DFOODY%20HUB%26cu%3DINR" style="width:180px;border:2px solid #ff0040;border-radius:10px;">
+</div>
+</div>
+<br>
+<button id="placeOrderBtn" class="btn" onclick="placeOrder()">Place Order</button>
+<br><br>
+<button class="btn" onclick="showPage('menu')">← Back To Menu</button>
+</section>
+
+<footer>
+<h2>FOODY PREMIUM v5.0</h2>
+<br>
+<p>📞 8449196052 | 8010559951</p>
+<p>✉️ rishabhtenguriya52@gmail.com</p>
+<br>
+<p>© 2026 Foody Premium. All Rights Reserved.</p>
+</footer>
+
+<script src="menu-data.js"></script>
+<script src="utils.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
