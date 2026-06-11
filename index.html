@@ -71,13 +71,69 @@ Order Now
 </select>
 <br><br>
 <div class="menu-grid" id="menuGrid">
-    
+    <div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600">
+<div class="food-content">
+<h3>🥟 Pani Puri ₹30</h3>
+<button class="add-btn" onclick="addItem('Pani Puri',30,this)">Add To Cart</button>
+</div>
+</div>
+
+<div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1605478371310-fea3c6b5e3c8?w=600">
+<div class="food-content">
+<h3>🥔 Aloo Tikki ₹40</h3>
+<button class="add-btn" onclick="addItem('Aloo Tikki',40,this)">Add To Cart</button>
+</div>
+</div>
+
+<div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600">
+<div class="food-content">
+<h3>🍘 Samosa ₹15</h3>
+<button class="add-btn" onclick="addItem('Samosa',15,this)">Add To Cart</button>
+</div>
+</div>
+
+<div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?w=600">
+<div class="food-content">
+<h3>🥖 Bedai ₹15</h3>
+<button class="add-btn" onclick="addItem('Bedai ',15,this)">Add To Cart</button>
+</div>
+</div>
+
+<div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1606756790138-261d2b21cd75?w=600">
+<div class="food-content">
+<h3>🥟 Kachori ₹15</h3>
+<button class="add-btn" onclick="addItem('Kachori',15,this)">Add To Cart</button>
+</div>
+</div>
+
+<div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1604908176997-125f25cc500f?w=600">
+<div class="food-content">
+<h3>🍛 Chhole Bhature ₹40</h3>
+<button class="add-btn" onclick="addItem('Chhole Bhature',40,this)">Add To Cart</button>
+<br><br>
+<input type="number" id="chocolateQty" value="1" min="1" style="width:80px; padding:5px;">
+<br><br>
+</div>
+</div>
+
 <!-- BURGER -->
 <div class="food fastfood">
 <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd">
 <div class="food-content">
-<h3>Burger ₹99</h3>
-<button class="add-btn" onclick="addItem('Burger',99,this)">Add To Cart</button>
+<h3>Burger ₹40</h3>
+<select id="BurgerSelect">
+    <option value="30|simple Burger ">Simple Burger ₹35</option>
+    <option value="40|Burger"> Paneer Burger ₹45</option>
+    <option value="50|Burger">cheese+Paneer Burger ₹55</option>
+</select>
+<input type="number" id="Burger" value="1" min="1">
+<button class="add-btn" onclick="addPizza(this)">Add To Cart</button>
 </div>
 </div>
 
@@ -86,50 +142,82 @@ Order Now
 <div class="food-content">
 <h3>🍕 Pizza</h3>
 <select id="pizzaSelect">
-    <option value="199|Regular Pizza">Regular Pizza ₹199</option>
-    <option value="299|Medium Pizza">Medium Pizza ₹299</option>
-    <option value="399|Large Pizza">Large Pizza ₹399</option>
+    <option value="99|Regular Pizza">Margherita Pizza ₹99</option>
+    <option value="110|Regular Pizza">Onion Pizza ₹110</option>
+    <option value="149|Medium Pizza">Sweetcorn Pizza ₹149</option>
+    <option value="170|Medium Pizza">Paneer+Sweetcorn Pizza ₹170</option>
+    
+    <option value="259|Large Pizza">Panner tikka pizza ₹259</option>
 </select>
 <input type="number" id="pizzaQty" value="1" min="1">
 <button class="add-btn" onclick="addPizza(this)">Add To Cart</button>
 </div>
 </div>
 
-<!-- Birthday cake -->
-<div class="food fastfood">
- <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=600" alt="Noodles">
-<div class="food-content">
-<h3>Noodle ₹40</h3>
-<button class="add-btn" onclick="addItem('Noodles',40,this)">Add To Cart</button>
-</div>
-</div>
+
 
 <!-- MOMOS -->
 <div class="food fastfood">
 <img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=600">
 <div class="food-content">
-<h3>Momos ₹80</h3>
-<button class="add-btn" onclick="addItem('Momos',80,this)">Add To Cart</button>
+<h3>Momos ₹40</h3>
+<button class="add-btn" onclick="addItem('Momos',40,this)">Add To Cart</button>
 </div>
 </div>
+<!-- FINGER -->
+<div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=600">
+<div class="food-content">
+<h3>Finger ₹40</h3>
+<button class="add-btn" onclick="addItem('Finger',40,this)">Add To Cart</button>
+</div>
+</div>
+    
+<div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591">
+<div class="food-content">
+<h3>🍕 sandwich</h3>
+<select id="pizzaSelect">
+    <option value="60|sandwich"> sandwich ₹60</option>
+    <option value="80|paneer+sandwich">sandwich ₹80</option>
+    
+</select>
+</select>
+<input type="number" id="pizzaQty" value="1" min="1">
+<button class="add-btn" onclick="addPizza(this)">Add To Cart</button>
+</div>
+</div>
+
+<div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591">
+<div class="food-content">
+<h3>🍕 Chowmein</h3>
+<select id="pizzaSelect">
+    <option value="35|half chowmein"> half chowmein ₹35</option>
+    <option value="|Full chowmein">Full chowmein ₹65</option>
+    <option value="50|half chowmei">paneer Fullchowmein ₹50</option>
+     <option value="90|Full chowmei">paneer Fullchowmein ₹90</option>
+</select>
+</select>
+<input type="number" id="pizzaQty" value="1" min="1">
+<button class="add-btn" onclick="addPizza(this)">Add To Cart</button>
+</div>
+</div>
+
+<!--  -->
+    <h1>100gm paneer</h1>
+<div class="food fastfood">
+ <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=600" alt="Noodles">
+<div class="food-content">
+<h3>Chilly paneer ₹100</h3>
+<button class="add-btn" onclick="addItem('chilly paneer',100,this)">Add To Cart</button>
+</div>
+</div>
+
+
 
 <!-- COCA COLA -->
-<div class="food drinks">
-<img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e">
-<div class="food-content">
-<h3>Coca Cola ₹20</h3>
-<button class="add-btn" onclick="addItem('Coca Cola',20,this)">Add To Cart</button>
-</div>
-</div>
 
-<!-- PEPSI -->
-<div class="food drinks">
-<img src="https://images.unsplash.com/photo-1581006852262-e4307cf6283a">
-<div class="food-content">
-<h3>Pepsi ₹20</h3>
-<button class="add-btn" onclick="addItem('Pepsi',20,this)">Add To Cart</button>
-</div>
-</div>
 
 <div class="food drinks">
     <img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e">
@@ -138,26 +226,30 @@ Order Now
         <select id="coldDrinkSelect">
             <option value="20|Coca Cola">Coca Cola ₹20</option>
             <option value="20|Pepsi">Pepsi ₹20</option>
+             <option value="20|frooti">frooti₹20</option>
+             <option value="20|dew">dew ₹20</option>
+            <option value="20|string">string ₹20</option>
+            <option value="85|String">string ₹30 </option>
             <option value="85|Sprite">Sprite ₹85</option>
+             <option value="20|Coca Cola">Coca Cola ₹85</option>
+            
+             <option value="20|frooti">frooti ₹100</option>
+            <option value="20|frooti">frooti ₹50</option>
+           
+            <option value="85|Dew">DEw ₹85</option>
+             <option value="20|REd bull">RED bull ₹85</option>
         </select>
         <br><br>
         <button class="add-btn" onclick="addColdDrink(this)">Add To Cart</button>
     </div>
 </div>
 
-<!-- SPRITE -->
-<div class="food drinks">
-<img src="https://images.unsplash.com/photo-1624517452488-04869289c4ca">
-<div class="food-content">
-<h3>Sprite ₹85</h3>
-<button class="add-btn" onclick="addItem('Sprite',85,this)">Add To Cart</button>
-</div>
-</div>
+
 
 <div class="food fastfood">
     <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600" alt="Birthday Cake">
     <div class="food-content">
-        <h3>🎂 Birthday Cake ₹499</h3>
+        <h3>🎂 Birthday Cake ₹299</h3>
         <select id="cakeFlavor">
             <option value="Chocolate">🍫 Chocolate</option>
             <option value="Black Forest">🎂 Black Forest</option>
