@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
 <title>FOODY HUB</title>
-    <meta name="description" content="FoodyHub is a smart food ordering platform. Order food online quickly and easily .">
+<meta name="description" content="FoodyHub is a smart food ordering platform. Order food online quickly and easily .">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <nav>
@@ -19,6 +21,7 @@ FOODY HUB
 🕘 9:00 AM - 9:00 PM
 </span>
 </div>
+
 <ul>
 <li><a href="#" onclick="showPage('home')">Home</a></li>
 <li><a href="#" onclick="showPage('customer')">Customer</a></li>
@@ -28,99 +31,84 @@ FOODY HUB
 </nav>
 
 <!-- HOME PAGE -->
-
 <section class="hero page active" id="home">
 <div>
 <h1>Welcome To <span>FOODY HUB</span></h1>
-
 <p>Fast Delivery • Fresh Food • Best Taste</p>
-
 <br>
-
-<button class="btn" onclick="showPage('customer')">
-Order Now
-</button>
-
-
+<button class="btn" onclick="showPage('customer')">Order Now</button>
+</div>
 </section>
+
 <!-- CUSTOMER PAGE -->
 <section class="page" id="customer">
 <h2 class="title">Customer Details</h2>
+
 <div class="card customer-card">
 <input type="text" id="name" placeholder="Full Name" required>
 <input type="tel" id="phone" placeholder="Mobile Number" required>
 <textarea id="address" placeholder="Delivery Address" required></textarea>
+
 <button class="btn" onclick="getLocation()">📍 Get GPS Location</button>
+
 <br><br>
+
 <p id="locationText">Location Not Selected</p>
+
 <div id="mapContainer" style="margin-top:20px;"></div>
+
 <a id="mapLink" target="_blank" class="btn" style="display:none;margin-top:10px;">Open in Google Maps</a>
+
 <br><br>
+
 <button class="btn" onclick="goToMenu()">Next → Menu</button>
 </div>
 </section>
 
 <!-- MENU PAGE -->
 <section class="page" id="menu">
+
 <h2 class="title">Our Menu</h2>
+
 <input type="text" id="search" placeholder="Search Food..." onkeyup="searchFood()">
+
 <br><br>
+
 <select id="categoryFilter" onchange="filterCategory()">
 <option value="all">All Categories</option>
 <option value="fastfood">Fast Food</option>
 <option value="drinks">Cold Drinks</option>
 <option value="milk">Milk</option>
 </select>
+
 <br><br>
+
 <div class="menu-grid" id="menuGrid">
-    <div class="food fastfood">
-<img src="https://unsplash.com/photos/a-buffet-table-filled-with-different-types-of-food-Wp-slwuk1CY" alt="Pani Puri">
+
+<!-- PANI PURI -->
+<div class="food fastfood">
+<img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600" alt="Pani Puri">
 <div class="food-content">
 <h3>🥟 Pani Puri ₹30</h3>
 <button class="add-btn" onclick="addItem('Pani Puri',30,this)">Add To Cart</button>
 </div>
 </div>
 
+<!-- ALOO TIKKI -->
 <div class="food fastfood">
-<img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600" alt="Aloo Tikki">
+<img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600" alt="Aloo Tikki">
 <div class="food-content">
 <h3>🥔 Aloo Tikki ₹40</h3>
 <button class="add-btn" onclick="addItem('Aloo Tikki',40,this)">Add To Cart</button>
 </div>
 </div>
 
-<div class="food fastfood">
-<img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600">
-<div class="food-content">
-<h3>🍘 Samosa ₹15</h3>
-<button class="add-btn" onclick="addItem('Samosa',15,this)">Add To Cart</button>
-</div>
-</div>
-
-<div class="food fastfood">
-<img src="images/bedai.jpg" alt="Bedai Aloo Sabzi">
-<div class="food-content">
-<h3>🥖 Bedai ₹15</h3>
-<button class="add-btn" onclick="addItem('Bedai ',15,this)">Add To Cart</button>
-</div>
-</div>
-
-<div class="food fastfood">
-
-<div class="food-content">
-<h3>🥟 Kachori ₹15</h3>
-<button class="add-btn" onclick="addItem('Kachori',15,this)">Add To Cart</button>
-</div>
-</div>
-
+<!-- SAMOSA -->
 <div class="food fastfood">
 <img src="https://images.unsplash.com/photo-1604908176997-125f25cc500f?w=600">
 <div class="food-content">
-<h3>🍛 Chhole Bhature ₹40</h3>
-<button class="add-btn" onclick="addItem('Chhole Bhature',40,this)">Add To Cart</button>
-<br><br>
-<input type="number" id="chocolateQty" value="1" min="1" style="width:80px; padding:5px;">
-<br><br>
+<h3>🍘 Samosa ₹15</h3>
+<button class="add-btn" onclick="addItem('Samosa',15,this)">Add To Cart</button>
 </div>
 </div>
 
@@ -128,139 +116,93 @@ Order Now
 <div class="food fastfood">
 <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd">
 <div class="food-content">
-<h3>Burger </h3>
-<select id="BurgerSelect">
-    <option value="30|simple Burger ">Simple Burger ₹35</option>
-    <option value="40|Burger"> Paneer Burger ₹45</option>
-    <option value="50|Burger">cheese+Paneer Burger ₹55</option>
+<h3>Burger</h3>
+
+<select class="burgerSelect">
+<option value="35|Simple Burger">Simple Burger ₹35</option>
+<option value="45|Paneer Burger">Paneer Burger ₹45</option>
+<option value="55|Cheese Paneer Burger">Cheese+Paneer Burger ₹55</option>
 </select>
-<input type="number" id="Burger" value="1" min="1">
+
+<input type="number" class="burgerQty" value="1" min="1">
+
 <button class="add-btn" onclick="Burger(this)">Add To Cart</button>
 </div>
 </div>
-    <div class="food fastfood">
 
-<div class="food-content">
-<h3>Patiz </h3>
-<select id="PatizSelect">
-    <option value="30|simple patiz ">Simple patiz ₹30</option>
-    <option value="40|patiz"> Paneer patiz ₹40</option>
-    <option value="100|Pizzapatiz">pizza patiz₹100</option>
-</select>
-<input type="number" id="patiz" value="1" min="1">
-<button class="add-btn" onclick="addPizza(this)">Add To Cart</button>
-</div>
-    </div>
-
+<!-- PIZZA -->
 <div class="food fastfood">
 <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591">
+
 <div class="food-content">
 <h3>🍕 Pizza</h3>
-<select id="pizzaSelect">
-    <option value="99|Regular Pizza">Margherita Pizza ₹99</option>
-    <option value="110|Regular Pizza">Onion Pizza ₹110</option>
-    <option value="149|Medium Pizza">Sweetcorn Pizza ₹149</option>
-    <option value="170|Medium Pizza">Paneer+Sweetcorn Pizza ₹170</option>
-    
-    <option value="259|Large Pizza">Panner tikka pizza ₹259</option>
+
+<select class="pizzaSelect">
+<option value="99|Margherita Pizza">Margherita Pizza ₹99</option>
+<option value="110|Onion Pizza">Onion Pizza ₹110</option>
+<option value="149|Sweetcorn Pizza">Sweetcorn Pizza ₹149</option>
+<option value="170|Paneer+Sweetcorn Pizza">Paneer+Sweetcorn Pizza ₹170</option>
+<option value="259|Paneer Tikka Pizza">Paneer Tikka Pizza ₹259</option>
 </select>
-<input type="number" id="pizzaQty" value="1" min="1">
+
+<input type="number" class="pizzaQty" value="1" min="1">
+
 <button class="add-btn" onclick="addPizza(this)">Add To Cart</button>
 </div>
 </div>
-
-
 
 <!-- MOMOS -->
 <div class="food fastfood">
-<img src="https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600" alt="Momos">
+<img src="https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600">
 <div class="food-content">
 <h3>Momos ₹40</h3>
 <button class="add-btn" onclick="addItem('Momos',40,this)">Add To Cart</button>
 </div>
 </div>
-<!-- FINGER -->
+
+<!-- FINGER FRIES -->
 <div class="food fastfood">
-<img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600" alt="Finger Fries">
+<img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600">
 <div class="food-content">
 <h3>Finger Fries ₹40</h3>
 <button class="add-btn" onclick="addItem('Finger Fries',40,this)">Add To Cart</button>
 </div>
 </div>
-    
+
+<!-- CHOWMEIN (FIXED ID ISSUE) -->
 <div class="food fastfood">
-<img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600" alt="Sandwich">
+<img src="https://images.unsplash.com/photo-1617622141573-1f0b9f8e7f6d?w=600">
+
 <div class="food-content">
-<h3>🍕 sandwich</h3>
-<select id="pizzaSelect">
-    <option value="60|sandwich"> sandwich ₹60</option>
-    <option value="80|paneer+sandwich">sandwich ₹80</option>
-    
-</select>
-</select>
-<input type="number" id="pizzaQty" value="1" min="1">
-<button class="add-btn" onclick="addPizza(this)">Add To Cart</button>
-</div>
-</div>
+<h3>Chowmein</h3>
 
-<div class="food fastfood">
-<img src="https://images.unsplash.com/photo-1617622141573-1f0b9f8e7f6d?w=600" alt="Chowmein">
+<select class="chowSelect">
+<option value="35|Half Chowmein">Half Chowmein ₹35</option>
+<option value="65|Full Chowmein">Full Chowmein ₹65</option>
+<option value="50|Paneer Half Chowmein">Paneer Half ₹50</option>
+<option value="90|Paneer Full Chowmein">Paneer Full ₹90</option>
+</select>
+
+<input type="number" class="chowQty" value="1" min="1">
+
+<button class="add-btn" onclick="addChowmein(this)">Add To Cart</button>
+</div>
+</div>
+<!-- PATIZ FIXED -->
 <div class="food-content">
-<h3> Chowmein</h3>
-<select id="pizzaSelect">
-    <option value="35|half chowmein"> half chowmein ₹35</option>
-    <option value="|Full chowmein">Full chowmein ₹65</option>
-    <option value="50|half chowmei">paneer Fullchowmein ₹50</option>
-     <option value="90|Full chowmei">paneer Fullchowmein ₹90</option>
+<h3>Patiz</h3>
+
+<select class="patizSelect">
+    <option value="30|Simple Patiz">Simple Patiz ₹30</option>
+    <option value="40|Paneer Patiz">Paneer Patiz ₹40</option>
+    <option value="100|Pizza Patiz">Pizza Patiz ₹100</option>
 </select>
-</select>
-<input type="number" id="pizzaQty" value="1" min="1">
-<button class="add-btn" onclick="addPizza(this)">Add To Cart</button>
+
+<input type="number" class="patizQty" value="1" min="1">
+
+<button class="add-btn" onclick="addPatiz(this)">Add To Cart</button>
 </div>
-</div>
-
-<!--  -->
-    
-<div class="food fastfood">
- <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600" alt="Chilli Paneer">
-<div class="food-content">
-<h3>Chilly paneer ₹100</h3>
-<button class="add-btn" onclick="addItem('chilly paneer',100,this)">Add To Cart</button>
-</div>
-</div>
-
-
-
-<!-- COCA COLA -->
-
-
-<div class="food drinks">
-    <img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e">
-    <div class="food-content">
-        <h3>🥤 Cold Drinks</h3>
-        <select id="coldDrinkSelect">
-            <option value="20|Coca Cola">Coca Cola ₹20</option>
-            <option value="20|Pepsi">Pepsi ₹20</option>
-             <option value="20|frooti">frooti₹20</option>
-             <option value="20|dew">dew ₹20</option>
-            <option value="20|string">string ₹20</option>
-            <option value="85|String">string ₹30 </option>
-            <option value="85|Sprite">Sprite ₹85</option>
-             <option value="20|Coca Cola">Coca Cola ₹85</option>
-            
-             <option value="20|frooti">frooti ₹100</option>
-            <option value="20|frooti">frooti ₹50</option>
-           
-            <option value="85|Dew">DEw ₹85</option>
-             <option value="20|REd bull">RED bull ₹120</option>
-        </select>
-        <br><br>
-        <button class="add-btn" onclick="addColdDrink(this)">Add To Cart</button>
-    </div>
-</div>
-
-
-
+ 
 <div class="food fastfood">
     <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600" alt="Birthday Cake">
     <div class="food-content">
@@ -277,103 +219,111 @@ Order Now
     </div>
 </div>
 
+<div class="food drinks">
+    <div class="food-content">
+
+        <h3>🥤 Cold Drinks</h3>
+
+        <!-- DRINK SELECT -->
+        <select class="drinkSelect">
+            <option value="20|Coca Cola">Coca Cola ₹20</option>
+            <option value="20|Pepsi">Pepsi ₹20</option>
+            <option value="20|Frooti">Frooti ₹20</option>
+            <option value="25|Thums Up">Thums Up ₹25</option>
+            <option value="30|Sprite">Sprite ₹30</option>
+            <option value="25|Limca">Limca ₹25</option>
+            <option value="25|7UP">7UP ₹25</option>
+            <option value="40|Maaza">Maaza ₹40</option>
+            <option value="85|Red Bull">Red Bull ₹85</option>
+        </select>
+
+        <br><br>
+
+        <!-- BOTTLE SIZE -->
+        <select class="drinkSize">
+            <option value="0|250ml">250ml</option>
+            <option value="2|500ml">500ml (+₹2)</option>
+            <option value="5|1L">1L (+₹5)</option>
+        </select>
+
+        <br><br>
+
+        <button class="add-btn" onclick="addColdDrink(this)">
+            Add To Cart
+        </button>
+
+    </div>
+</div>
+
+
 <!-- CHOCOLATE -->
 <div class="food milk">
-<img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600" alt="Chocolate">
+<img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600">
+
 <div class="food-content">
 <h3>🍫 Chocolate</h3>
-<select id="chocolateSelect">
+
+<select class="chocoSelect">
 <option value="25|Dairy Milk">Dairy Milk ₹25</option>
 <option value="30|KitKat">KitKat ₹30</option>
 <option value="35|5 Star">5 Star ₹35</option>
 <option value="40|Snickers">Snickers ₹40</option>
 </select>
-<br><br>
-<input type="number" id="chocolateQty" value="1" min="1" style="width:80px; padding:5px;">
-<br><br>
+
+<input type="number" class="chocoQty" value="1" min="1">
+
 <button class="add-btn" onclick="addChocolate(this)">Add To Cart</button>
 </div>
 </div>
 
-<!-- MILK 1L -->
-<div class="food milk">
-<img src="https://images.unsplash.com/photo-1550583724-b2692b85b150">
-<div class="food-content">
-<h3>Milk 1 Litre ₹60</h3>
-<button class="add-btn" onclick="addItem('Milk 1L',55,this)">Add To Cart</button>
 </div>
-</div>
-</div>
+
 <br><br>
 <button class="btn" onclick="showPage('cart')">🛒 View Cart</button>
+
 </section>
 
 <!-- CART PAGE -->
 <section class="page" id="cart">
+
 <h2 class="title">Your Cart</h2>
+
 <div id="cartItems"></div>
+
 <div style="font-size:22px;margin-top:15px;">🍔 Food Total ₹<span id="foodTotal">0</span></div>
 <div style="font-size:22px;margin-top:10px;">🚚 Delivery Charge ₹<span id="deliveryCharge">20</span></div>
 <div class="total">💰 Grand Total ₹<span id="total">0</span></div>
+
 <div class="card">
 <h3>💳 Payment Method</h3>
+
 <select id="payment">
-    <option value="Cash On Delivery">Cash On Delivery</option>
-    <option value=" Online"> Online Payment</option>
+<option value="Cash On Delivery">Cash On Delivery</option>
+<option value="Online Payment">Online Payment</option>
 </select>
+
 <div style="text-align:center;margin-top:15px;">
-    <h3>💳 Scan & Pay</h3>
-   <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi%3A%2F%2Fpay%3Fpa%3D8449196052%40nyes%26pn%3DFOODY%20HUB%26cu%3DINR" style="width:180px;border:2px solid #ff0040;border-radius:10px;">
+<h3>💳 Scan & Pay</h3>
+
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi%3A%2F%2Fpay%3Fpa%3D8449196052%40nyes%26pn%3DFOODY%20HUB%26cu%3DINR"
+style="width:180px;border:2px solid #ff0040;border-radius:10px;">
 </div>
 </div>
+
 <br>
+
 <button id="placeOrderBtn" class="btn" onclick="placeOrder()">Place Order</button>
+
 <br><br>
+
 <button class="btn" onclick="showPage('menu')">← Back To Menu</button>
+
 </section>
+
+<!-- SCRIPTS -->
 <script src="menu-data.js"></script>
 <script src="utils.js"></script>
 <script src="script.js"></script>
 
-<div class="bottom-nav">
-  <a href="#" onclick="showPage('home')">🏠 Home</a>
-  <a href="#" onclick="showPage('menu')">🍔 Menu</a>
-  <a href="#" onclick="showPage('cart')">🛒 Cart</a>
- <a href="#" onclick="showReview()">⭐ Review</a>
-</div>
-<div id="reviewModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:9999;justify-content:center;align-items:center;">
-
-<div style="background:white;padding:20px;border-radius:20px;width:90%;max-width:350px;text-align:center;">
-
-<h2>⭐ Rate FOODY HUB</h2>
-
-<select id="starRating">
-<option value="5">⭐⭐⭐⭐⭐ (5 Star)</option>
-<option value="4">⭐⭐⭐⭐ (4 Star)</option>
-<option value="3">⭐⭐⭐ (3 Star)</option>
-<option value="2">⭐⭐ (2 Star)</option>
-<option value="1">⭐ (1 Star)</option>
-</select>
-
-<br><br>
-
-<select id="tasteRating">
-<option>😋 Excellent Taste</option>
-<option>😊 Good Taste</option>
-<option>🙂 Average Taste</option>
-<option>😕 Poor Taste</option>
-<option>😣 Very Poor Taste</option>
-</select>
-
-<br><br>
-
-<button class="btn" onclick="submitReview()">Submit Review</button>
-
-<br><br>
-
-<button class="btn" onclick="closeReview()">Close</button>
-
-</div>
-</div>
 </body>
 </html>
