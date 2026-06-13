@@ -1,144 +1,118 @@
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbzXwp_JR4bGHzDXjZaqLrC7jfnJvgS8iekTSfLfzPTxGaapCblJeg_8AbJ6mqIlaOpQ7Q/exec";
-let userDistance = 0;
 let upiID = "8449196052@nyes";
 let cart = [];
+let gpsLocation = "";
 
+/* =========================
+   PAGE SYSTEM
+========================= */
 function showPage(pageId){
-document.querySelectorAll('.page').forEach(page=>{
-page.classList.remove('active');
+document.querySelectorAll('.page').forEach(p=>{
+p.classList.remove('active');
 });
 document.getElementById(pageId).classList.add('active');
 window.scrollTo(0,0);
 }
 
-function addItem(name,price,btn=null){
-let item = cart.find(x => x.name === name);
-if(item){
-item.qty++;
-}else{
-cart.push({
-name:name,
-price:price,
-qty:1
-});
-}
-if(btn){
-btn.classList.add("added");
-btn.innerHTML="✓ Added";
-}
-renderCart();
+/* =========================
+   GPS SYSTEM
+========================= */
+function getLocation(){
+if(!navigator.geolocation){
+alert("GPS not supported");
+return;
 }
 
-function renderCart(){
-let html = "";
-let total = 0;
-cart.forEach(item=>{
-total += item.price * item.qty;
-html += `<div class="cart-item"><div><b>${item.name}</b><br>₹${item.price}</div><div><button class="qty-btn" onclick="decreaseQty('${item.name}')">-</button>${item.qty}<button class="qty-btn" onclick="increaseQty('${item.name}')">+</button><button class="qty-btn" onclick="removeItem('${item.name}')">Remove</button></div></div>`;
-});
-document.getElementById("cartItems").innerHTML = html;
-let deliveryCharge = calculateDeliveryCharge();
-document.getElementById("foodTotal").innerText = total;
-document.getElementById("deliveryCharge").innerText = deliveryCharge;
-document.getElementById("total").innerText = total + deliveryCharge;
+navigator.geolocation.getCurrentPosition(
+pos=>{
+gpsLocation = pos.coords.latitude + "," + pos.coords.longitude;
+document.getElementById("locationText").innerText = "✅ Location Captured";
+},
+()=>{
+alert("Please allow location");
+}
+);
 }
 
-function increaseQty(name){
-let item = cart.find(x => x.name === name);
-if(item){
-item.qty++;
-}
-renderCart();
-}
-
-function decreaseQty(name){
-let item = cart.find(x => x.name === name);
-if(item){
-item.qty--;
-if(item.qty <= 0){
-cart = cart.filter(x => x.name!== name);
-}
-renderCart();
-}
-}
-
-function removeItem(name){
-cart = cart.filter(x => x.name!== name);
-renderCart();
-}
-
-function searchFood(){
-let input = document.getElementById("search").value.toLowerCase();
-let foods = document.querySelectorAll(".food");
-foods.forEach(food=>{
-let text = food.innerText.toLowerCase();
-food.style.display = text.includes(input)? "block" : "none";
-});
-}
-
-function filterCategory(){
-let category = document.getElementById("categoryFilter").value;
-let foods = document.querySelectorAll(".food");
-foods.forEach(food=>{
-if(category==="all"){
-food.style.display="block";
-}else{
-food.style.display = food.classList.contains(category)? "block" : "none";
-}
-});
-}
-
-function placeOrder(){
+/* =========================
+   VALIDATION
+========================= */
+function goToMenu(){
 let name = document.getElementById("name").value.trim();
 let phone = document.getElementById("phone").value.trim();
 let address = document.getElementById("address").value.trim();
-let payment = document.getElementById("payment").value;
-if(name===""){ alert("Please enter your name"); return; }
-if(phone===""){ alert("Please enter mobile number"); return; }
-if(address===""){ alert("Please enter address"); return; }
-if(!gpsLocation){
-alert("GPS Location required");
+
+if(!name || !phone || !address){
+alert("Please fill all details");
 return;
 }
-let orderText = "🍔 FOODY HUB ORDER DETAIL\n";
-orderText += "👤 Name: " + name + "\n";
-orderText += "📞 Phone: " + phone + "\n";
-orderText += "🏠 Address: " + address + "\n";
-orderText += "📍 GPS: " + gpsLocation + "\n\n";
-orderText += "🛒 ITEMS:\n";
-let total = 0;
-cart.forEach(item=>{
-orderText += item.name + " x " + item.qty + " = ₹" + (item.qty * item.price) + "\n";
-total += item.qty * item.price;
-});
-let deliveryCharge = calculateDeliveryCharge();
-total += deliveryCharge;
-orderText += "\n🚚 Delivery Charge = ₹" + deliveryCharge;
-orderText += "\n💰 Grand Total = ₹" + total;
-orderText += "\n💳 Payment: " + payment;
-orderText += "\n💳 UPI ID: " + upiID + "\n";
-fetch(SHEET_URL, {
-  method: "POST",
-  body: JSON.stringify({
-    name: name,
-    phone: phone,
-    address: address,
-    gps: gpsLocation,
-    items: orderText,
-    total: total,
-    payment: payment
-  })
-})
-.then(() => console.log("Order Saved To Sheet"))
-.catch(err => console.log(err));
-let whatsappURL = "https://wa.me/918449196052?text=" + encodeURIComponent(orderText);
-window.open(whatsappURL, "_blank");
-alert("Order sent successfully!");
-cart = [];
-renderCart();
-showPage('home');
+
+showPage("menu");
 }
 
+/* =========================
+   CORE CART ENGINE (PREMIUM)
+========================= */
+function addItem(name,price,btn=null){
+
+let item = cart.find(x=>x.name===name);
+
+if(item){
+item.qty++;
+}else{
+cart.push({name,price,qty:1});
+}
+
+if(btn){
+btn.innerText="✓ Added";
+btn.disabled=true;
+setTimeout(()=>{
+btn.innerText="Add To Cart";
+btn.disabled=false;
+},800);
+}
+
+renderCart();
+}
+
+/* =========================
+   SAFE SELECT HELPERS
+========================= */
+function getData(box,selectClass,qtyClass){
+let sel = box.querySelector(selectClass);
+let qty = box.querySelector(qtyClass);
+
+let [price,name] = sel.value.split("|");
+
+return {
+price:parseInt(price),
+name:name,
+qty:parseInt(qty.value || 1)
+};
+}
+
+/* =========================
+   BURGER
+========================= */
+function Burger(btn){
+let box = btn.closest(".food");
+let data = getData(box,".burgerSelect",".burgerQty");
+
+addItem(data.name,data.price,btn);
+}
+
+/* =========================
+   PIZZA
+========================= */
+function addPizza(btn){
+let box = btn.closest(".food");
+let data = getData(box,".pizzaSelect",".pizzaQty");
+
+for(let i=0;i<data.qty;i++){
+addItem(data.name,data.price);
+}
+
+btn.innerText="✓ Added";
+}
 function addBirthdayCake(btn) {
 let flavor = document.getElementById("cakeFlavor").value;
 let birthdayName = prompt("Birthday Person Name:");
@@ -151,203 +125,193 @@ btn.classList.add("added");
 btn.innerHTML = "✓ Added";
 }
 
-function goToMenu(){
-let name = document.getElementById("name").value.trim();
-let phone = document.getElementById("phone").value.trim();
-let address = document.getElementById("address").value.trim();
-if(name === ""){
-alert("Please enter your name");
+/* =========================
+   CHOWMEIN (FIXED)
+========================= */
+function addChowmein(btn){
+let box = btn.closest(".food");
+let data = getData(box,".chowSelect",".chowQty");
+
+for(let i=0;i<data.qty;i++){
+addItem(data.name,data.price);
+}
+
+btn.innerText="✓ Added";
+}
+function addPatiz(btn){
+
+let box = btn.closest(".food-content");
+
+if(!box){
+alert("Patiz box not found");
 return;
 }
-if(phone === ""){
-alert("Please enter mobile number");
+
+let select = box.querySelector("select");
+let qty = box.querySelector("input");
+
+if(!select){
+alert("Select not found");
 return;
 }
-if(address === ""){
-alert("Please enter address");
-return;
+
+let [price,name] = select.value.split("|");
+
+let q = parseInt(qty?.value || 1);
+
+for(let i=0;i<q;i++){
+addItem(name, parseInt(price));
 }
-if(gpsLocation === ""){
-alert("Please capture GPS location first");
-return;
-}
-showPage('menu');
+
+btn.innerText = "✓ Added";
+btn.disabled = true;
+
+setTimeout(()=>{
+btn.innerText = "Add To Cart";
+btn.disabled = false;
+},800);
 }
 
 function addColdDrink(btn){
-let data = document.getElementById("coldDrinkSelect").value;
-let parts = data.split("|");
-let price = parseInt(parts[0]);
-let name = parts[1];
-addItem(name, price);
-btn.classList.add("added");
-btn.innerHTML = "✓ Added";
+
+let box = btn.closest(".food-content");
+
+let drink = box.querySelector(".drinkSelect").value.split("|");
+let size = box.querySelector(".drinkSize").value.split("|");
+
+let price = parseInt(drink[0]) + parseInt(size[0]);
+let name = drink[1] + " (" + size[1] + ")";
+
+addItem(name, price, btn);
+
+btn.innerText = "✓ Added";
+
+setTimeout(()=>{
+btn.innerText = "Add To Cart";
+},1000);
+
 }
 
+/* =========================
+   CHOCOLATE
+========================= */
 function addChocolate(btn){
-let data = document.getElementById("chocolateSelect").value;
-let qty = parseInt(document.getElementById("chocolateQty").value);
-let parts = data.split("|");
-let price = parseInt(parts[0]);
-let name = parts[1];
-let item = cart.find(x => x.name === name);
-if(item){
-item.qty += qty;
-}else{
-cart.push({
-name: name,
-price: price,
-qty: qty
+let box = btn.closest(".food");
+let data = getData(box,".chocoSelect",".chocoQty");
+
+for(let i=0;i<data.qty;i++){
+addItem(data.name,data.price);
+}
+
+btn.innerText="✓ Added";
+}
+
+/* =========================
+   CART RENDER
+========================= */
+function renderCart(){
+
+let box = document.getElementById("cartItems");
+box.innerHTML = "";
+
+let total = 0;
+
+cart.forEach(item=>{
+total += item.price * item.qty;
+
+box.innerHTML += `
+<div class="cart-item">
+<b>${item.name}</b>
+<span>₹${item.price} x ${item.qty}</span>
+<button onclick="increaseQty('${item.name}')">+</button>
+<button onclick="decreaseQty('${item.name}')">-</button>
+<button onclick="removeItem('${item.name}')">❌</button>
+</div>
+`;
 });
+
+document.getElementById("foodTotal").innerText = total;
+document.getElementById("deliveryCharge").innerText = cart.length ? 20 : 0;
+document.getElementById("total").innerText = total + (cart.length ? 20 : 0);
+}
+
+/* =========================
+   QTY SYSTEM
+========================= */
+function increaseQty(name){
+let i = cart.find(x=>x.name===name);
+if(i) i.qty++;
+renderCart();
+}
+
+function decreaseQty(name){
+let i = cart.find(x=>x.name===name);
+if(i){
+i.qty--;
+if(i.qty<=0) cart = cart.filter(x=>x.name!==name);
 }
 renderCart();
 }
 
-function payNow(){
-let total = document.getElementById("total").innerText;
-let upiLink = `upi://pay?pa=${upiID}&pn=FOODY%20HUB&am=${total}&cu=INR`;
-window.location.href = upiLink;
-}
-
-function addPizza(btn){
-let data = document.getElementById("pizzaSelect").value;
-let qty = parseInt(document.getElementById("pizzaQty").value);
-let parts = data.split("|");
-let price = parseInt(parts[0]);
-let name = parts[1];
-let item = cart.find(x => x.name === name);
-if(item){
-item.qty += qty;
-}else{
-cart.push({
-name: name,
-price: price,
-qty: qty
-});
-}
+function removeItem(name){
+cart = cart.filter(x=>x.name!==name);
 renderCart();
-btn.classList.add("added");
-btn.innerHTML = "✓ Added";
 }
 
-// ===== Foody Hub Delivery Area Lock =====
-const SHOP_LAT = 27.32655;  // Teri shop
-const SHOP_LNG = 78.154995;
-const MAX_DISTANCE = 12; // 12km
+/* =========================
+   PLACE ORDER (WHATSAPP)
+========================= */
+function placeOrder(){
 
-// Distance calculate karne ka formula
-function getDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371; // Earth radius in km
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return R * c;
+let name = document.getElementById("name").value.trim();
+let phone = document.getElementById("phone").value.trim();
+let address = document.getElementById("address").value.trim();
+let payment = document.getElementById("payment").value;
+
+if(!name || !phone || !address){
+alert("Fill details");
+return;
 }
 
-// Delivery area check
-function checkDeliveryArea() {
-  if (!navigator.geolocation) {
-    alert("Location access nahi mila. Delivery area check nahi ho payega.");
-    return;
-  }
-  
-  navigator.geolocation.getCurrentPosition((position) => {
-    const userLat = position.coords.latitude;
-    const userLng = position.coords.longitude;
-    const distance = getDistance(SHOP_LAT, SHOP_LNG, userLat, userLng);
-    userDistance = distance;
-    
-    console.log(`User distance: ${distance.toFixed(1)} km`);
-    
-    if (distance > MAX_DISTANCE) {
-      // 12km se baahar hai
-      const msg = `Sorry! Hum sirf ${MAX_DISTANCE}km tak delivery karte hai.\nAap ${distance.toFixed(1)}km door ho.`;
-      alert(msg);
-      
-      // Saare Order/Cart button band kar de
-      document.querySelectorAll('.add-btn, #placeOrderBtn').forEach(btn => {
-        btn.disabled = true;
-        btn.innerText = 'Out of Delivery Area';
-        btn.style.background = '#555';
-        btn.style.cursor = 'not-allowed';
-      });
-      
-      // Upar red warning banner dikha de
-      const warning = document.createElement('div');
-      warning.style.cssText = 'background:#ff4444;color:white;padding:12px;text-align:center;font-weight:bold;position:fixed;top:0;left:0;width:100%;z-index:1000;';
-      warning.innerText = `⚠️ Aap delivery area se baahar ho. Sirf ${MAX_DISTANCE}km tak service available`;
-      document.body.prepend(warning);
-      
-    } else {
-      console.log(`Delivery available! ${distance.toFixed(1)} km door ho`);
-    }
-  }, (error) => {
-    alert("Location permission allow karo warna order nahi hoga bhai");
-  });
+if(cart.length===0){
+alert("Cart empty");
+return;
 }
 
-// Page load hote hi check
-window.addEventListener("load", checkDeliveryArea);
-function calculateDeliveryCharge() {
+let foodTotal = 0;
 
-    if(cart.length === 0){
-        return 0;
-    }
+cart.forEach(i=>{
+foodTotal += i.price*i.qty;
+});
 
-    // 8 km tak fixed ₹20
-    if(userDistance <= 7){
-        return 20;
-    }
-
-    // 8 km ke baad ₹2 per km extra
-    let extraKm = Math.ceil(userDistance - 7);
-
-    return 20 + (extraKm * 2);
-}
-function showReview(){
-    document.getElementById("reviewModal").style.display="flex";
+if(foodTotal < 130){
+alert("❌ Minimum Order ₹130 Required");
+return;
 }
 
-function closeReview(){
-    document.getElementById("reviewModal").style.display="none";
+let msg = `🍔 FOODY HUB ORDER\n\n👤 ${name}\n📞 ${phone}\n🏠 ${address}\n\n`;
+
+cart.forEach(i=>{
+msg += `${i.name} x${i.qty} = ₹${i.price*i.qty}\n`;
+});
+
+msg += `\n🍔 Total: ₹${foodTotal}`;
+msg += `\n🚚 Delivery: ₹${cart.length?20:0}`;
+msg += `\n💰 Grand: ₹${foodTotal + (cart.length?20:0)}`;
+msg += `\n💳 Payment: ${payment}`;
+
+let url = "https://wa.me/918449196052?text=" + encodeURIComponent(msg);
+
+window.open(url,"_blank");
+
+cart=[];
+renderCart();
+showPage("home");
 }
 
-function submitReview(){
-
-    let stars =
-    document.getElementById("starRating").value;
-
-    let taste =
-    document.getElementById("tasteRating").value;
-
-    alert(
-        "⭐ Rating: " + stars + "/5\n\n" +
-        "😋 Taste: " + taste +
-        "\n\nThank You For Your Review ❤️"
-    );
-
-    closeReview();
-} function doPost(e) {
-
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-
-  const data = JSON.parse(e.postData.contents);
-
-  sheet.appendRow([
-    new Date(),
-    data.name,
-    data.phone,
-    data.address,
-    data.gps,
-    data.items,
-    data.total,
-    data.payment
-  ]);
-
-  return ContentService
-    .createTextOutput("Success")
-    .setMimeType(ContentService.MimeType.TEXT);
-}
+/* =========================
+   INIT
+========================= */
+window.onload = ()=>{
+renderCart();
+};
