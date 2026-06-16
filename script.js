@@ -267,8 +267,8 @@ function placeOrder(){
         foodTotal += i.price * i.qty;
     });
 
-    if(foodTotal < 130){
-        alert("❌ Minimum Order ₹130 Required");
+    if(foodTotal < 100){
+        alert("❌ Minimum Order ₹100 Required");
         return;
     }
 
