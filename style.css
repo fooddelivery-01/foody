@@ -611,3 +611,13 @@ nav ul li a{
     font-size:11px;
 }
 }
+@media (max-width:768px){
+.logo{
+    font-size:18px;
+}
+}
+@media (max-width:768px){
+nav ul{
+    gap:10px;
+}
+}
