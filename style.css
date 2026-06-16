@@ -728,9 +728,3 @@ nav ul{
     transform:scale(1.02);
     box-shadow:0 0 10px #ff9800;
 }
-
-@media (max-width:768px){
-    nav ul{
-        display:none;
-    }
-}
