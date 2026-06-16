@@ -229,10 +229,43 @@ margin-top:20px;
     letter-spacing:1px;
 }
 nav{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:nowrap;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,.9);
+    z-index: 999;
+}
+
+nav ul{
+    display: flex;
+    list-style: none;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+nav ul::-webkit-scrollbar{
+    display: none;
+}
+
+nav ul li{
+    flex-shrink: 0;
+}
+
+nav ul li a{
+    display: block;
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
 }
 #placeOrderBtn:disabled{
     background: gray;
@@ -293,21 +326,23 @@ body{
 
 @media (max-width:768px){
 
-nav{
-padding:12px 15px;
-}
+    .logo{
+        font-size:16px;
+    }
 
-.logo{
-font-size:18px;
-}
+    nav{
+        padding:10px;
+    }
 
-nav ul{
-gap:10px;
-}
+    nav ul{
+        gap:5px;
+        max-width:65%;
+    }
 
-nav ul li a{
-padding:4px 8px;
-font-size:11px;
+    nav ul li a{
+        font-size:11px;
+        padding:5px 8px;
+    }
 }
 .hero h1{
 font-size:38px;
@@ -356,7 +391,7 @@ height:60px;
 .nav-item{
 font-size:12px;
 }
-}
+
 
 /* Extra Small Phones */
 
@@ -606,17 +641,16 @@ nav ul li a:hover{
     display:block;
 }
 @media (max-width:768px){
+
 nav ul li a{
     padding:4px 8px;
     font-size:11px;
 }
-}
-@media (max-width:768px){
+
 .logo{
     font-size:18px;
 }
-}
-@media (max-width:768px){
+
 nav ul{
     gap:10px;
 }
@@ -695,3 +729,8 @@ nav ul{
     box-shadow:0 0 10px #ff9800;
 }
 
+@media (max-width:768px){
+    nav ul{
+        display:none;
+    }
+}
